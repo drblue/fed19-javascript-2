@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.scss';
-import PointsCounter from './components/PointsCounter';
+import PointsCounterClass from './components/PointsCounterClass';
+import PointsCounterFunction from './components/PointsCounterFunction';
 
 function App() {
 	return (
@@ -9,12 +10,17 @@ function App() {
 
 			<div className="text-center my-5">
 				<h2>Home Team</h2>
-				<PointsCounter />
+				<PointsCounterFunction />
+
+				<hr className="my-5" />
+
+				<h2>Lost Team</h2>
+				<PointsCounterFunction />
 
 				<hr className="my-5" />
 
 				<h2>Away Team</h2>
-				<PointsCounter />
+				<PointsCounterClass />
 			</div>
 		</div>
 	);

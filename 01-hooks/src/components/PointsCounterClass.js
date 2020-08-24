@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class PointsCounter extends Component {
+class PointsCounterClass extends Component {
 	state = {
 		pointsCount: 0,
 	}
@@ -38,4 +38,4 @@ class PointsCounter extends Component {
 	}
 }
 
-export default PointsCounter;
+export default PointsCounterClass;
