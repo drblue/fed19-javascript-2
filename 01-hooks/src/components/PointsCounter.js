@@ -6,15 +6,21 @@ class PointsCounter extends Component {
 	}
 
 	decreasePoints = () => {
-		this.setState({
-			pointsCount: this.state.pointsCount - 1,
-		});
+		this.setState(prevState => ({
+			pointsCount: prevState.pointsCount - 1,
+		}));
+		this.setState(prevState => ({
+			pointsCount: prevState.pointsCount - 1,
+		}));
 	}
 
 	increasePoints = () => {
-		this.setState({
-			pointsCount: this.state.pointsCount + 1,
-		});
+		this.setState(prevState => ({
+			pointsCount: prevState.pointsCount + 1,
+		}));
+		this.setState(prevState => ({
+			pointsCount: prevState.pointsCount + 1,
+		}));
 	}
 
 	render() {
