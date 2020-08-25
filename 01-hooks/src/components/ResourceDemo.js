@@ -2,13 +2,17 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 
 const ResourceDemo = () => {
-	const [resource, setResource] = useState('todos');
-	const [items, setItems] = useState([]);
-	const [page, setPage] = useState(1);
+	const [resource, setResource] = useState('todos'); // 0
+	const [items, setItems] = useState([]); // 1
+	const [page, setPage] = useState(1); // 2
+	const [counter, setCounter] = useState(1); // 3
+	const [tooMuchFreeTime, setTooMuchFreeTime] = useState(false); // 4
+
+	console.log("Look ma, I'm rendering");
 
 	// watch `resource` for changes and trigger side-effect
 	useEffect(() => {
-		console.log(`resource changed to ${resource}!!`);
+		console.log(`Side-effect triggered due to change in either resource, page or counter state variable`);
 
 		axios.get(`https://jsonplaceholder.typicode.com/${resource}`)
 		.then(res => {
@@ -17,9 +21,23 @@ const ResourceDemo = () => {
 		});
 	}, [resource, page]);
 
+	// watch `counter`
+	useEffect(() => {
+		console.log("Side-effect for counter triggered due to change of counter's value");
+		if (counter > 10) {
+			setTooMuchFreeTime(true);
+		}
+	}, [counter]);
+
 	return (
 		<div>
 			<h2>ResourceDemo</h2>
+
+			<div>
+				<button onClick={() => setCounter(prevCounter => prevCounter + 1)} className={tooMuchFreeTime ? "btn btn-danger" : "btn btn-success"}>
+					You have click me {counter} times!
+				</button>
+			</div>
 
 			<div className="btn-group">
 				<button onClick={() => setResource('photos')} className="btn btn-primary">Photos</button>
