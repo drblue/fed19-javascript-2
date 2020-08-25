@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './App.scss';
-import Clock from './components/Clock';
 import ResourceDemo from './components/ResourceDemo';
 
 function App() {
@@ -13,18 +12,6 @@ function App() {
 			<div className="text-center my-5">
 
 				<ResourceDemo />
-
-{/*
-				<button onClick={() => setShowClock(!showClock)} className="btn btn-lg btn-outline-success">
-					{ showClock ? 'Hide Clock' : 'Show Clock' }
-				</button>
-
-				<div className="my-5">
-					{
-						showClock ? (<Clock />) : 'Time is relative!'
-					}
-				</div>
-*/}
 			</div>
 		</div>
 	);
