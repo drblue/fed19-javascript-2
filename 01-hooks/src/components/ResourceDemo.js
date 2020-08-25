@@ -1,5 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import axios from 'axios';
+
+const paginateArray = (items, page, itemsPerPage) => {
+	for (let i = 0; i < 500000000; i++) {}
+
+	console.log(`Paginating array for page ${page} with ${itemsPerPage} items per page`, items);
+
+	return items.slice(
+		page * itemsPerPage - itemsPerPage,
+		page * itemsPerPage
+	);
+}
 
 const ResourceDemo = () => {
 	const [resource, setResource] = useState('todos'); // 0
@@ -19,7 +30,15 @@ const ResourceDemo = () => {
 			console.log("Request returned a result:", res.data);
 			setItems(res.data);
 		});
-	}, [resource, page]);
+	}, [resource]);
+
+	// paginate
+	const itemsPerPage = 5;
+	const paginatedItems = useMemo(() => {
+		console.log("Memo for paginatedItems called");
+		return paginateArray(items, page, itemsPerPage);
+	}, [items, page]);
+	// const paginatedItems = paginateArray(items, page, itemsPerPage);
 
 	// watch `counter`
 	useEffect(() => {
@@ -54,7 +73,7 @@ const ResourceDemo = () => {
 				</div>
 
 				<ul>
-					{items.map((item, index) => (<li key={index}>{item.title}</li>))}
+					{paginatedItems.map((item, index) => (<li key={index}>{item.title}</li>))}
 				</ul>
 			</div>
 		</div>
