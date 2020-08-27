@@ -5,6 +5,8 @@ class PointsCounterClass extends Component {
 		pointsCount: 0,
 	}
 
+	timesRendered = 0;
+
 	decreasePoints = () => {
 		this.setState(prevState => ({
 			pointsCount: prevState.pointsCount - 1,
@@ -24,10 +26,13 @@ class PointsCounterClass extends Component {
 	}
 
 	render() {
+		this.timesRendered++;
+
 		return (
 			<div className="points-counter">
 				<div className="text-center">
 					<p className="display-2">{this.state.pointsCount}</p>
+					<p className="small text-muted">This component has been rendered {this.timesRendered} times</p>
 				</div>
 				<div className="point-buttons btn-group">
 					<button onClick={this.decreasePoints} className="btn btn-lg btn-danger">-</button>
