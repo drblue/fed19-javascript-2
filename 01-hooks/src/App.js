@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './App.scss';
 import StarWarsPedia from './components/StarWarsPedia';
-import PointsCounterClass from './components/PointsCounterClass';
 import UseRefDomDemo from './components/UseRefDomDemo';
+import PointsCounterFunction from './components/PointsCounterFunction';
 
 function App() {
 	const [showClock, setShowClock] = useState(true);
@@ -13,9 +13,9 @@ function App() {
 
 			<div className="text-center my-5">
 
-				{/* <PointsCounterClass /> */}
+				<PointsCounterFunction />
 				{/* <StarWarsPedia /> */}
-				<UseRefDomDemo />
+				{/* <UseRefDomDemo /> */}
 			</div>
 		</div>
 	);
