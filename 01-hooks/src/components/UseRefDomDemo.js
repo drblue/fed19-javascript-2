@@ -6,6 +6,7 @@ const UseRefDomDemo = () => {
 	const [query, setQuery] = useState('');
 	const [searchResult, setSearchResult] = useState([]);
 	const prevResultCount = useRef(null);
+	const prevQueries = useRef([]);
 	const queryRef = useRef();
 
 	const clearSearch = () => {
@@ -42,13 +43,20 @@ const UseRefDomDemo = () => {
 			<form onSubmit={searchStarShip}>
 				<div className="form-group">
 					<input
-						onChange={e => setQuery(e.target.value)}
+						onChange={e => {
+							if (query.length > 2) {
+								prevQueries.current.push(query);
+							}
+							setQuery(e.target.value);
+						}}
 						ref={queryRef}
 						value={query}
 						type="text"
 						className="form-control"
 						placeholder="Type to search" />
 				</div>
+
+				<p className="text-muted small">{prevQueries.current.join(", ")}</p>
 
 				<div className="text-center">
 					<button className="btn btn-primary" onClick={clearSearch}>Clear</button>
