@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './App.scss';
-import ResourceDemo from './components/ResourceDemo';
+import StarWarsPedia from './components/StarWarsPedia';
 
 function App() {
 	const [showClock, setShowClock] = useState(true);
@@ -11,7 +11,7 @@ function App() {
 
 			<div className="text-center my-5">
 
-				<ResourceDemo />
+				<StarWarsPedia />
 			</div>
 		</div>
 	);
