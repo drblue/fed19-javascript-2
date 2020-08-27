@@ -5,6 +5,7 @@ const STARSHIPS = ["CR90 corvette","Star Destroyer","Sentinel-class landing craf
 const UseRefDomDemo = () => {
 	const [query, setQuery] = useState('');
 	const [searchResult, setSearchResult] = useState([]);
+	const prevResultCount = useRef(null);
 	const queryRef = useRef();
 
 	const clearSearch = () => {
@@ -22,6 +23,7 @@ const UseRefDomDemo = () => {
 			return;
 		}
 
+		prevResultCount.current = searchResult.length;
 		setSearchResult(
 			STARSHIPS.filter(starship =>
 				starship.toLowerCase().includes(query.toLowerCase())
@@ -54,6 +56,12 @@ const UseRefDomDemo = () => {
 			</form>
 
 			<div className="mt-3">
+				{
+					prevResultCount.current ? (
+						<p className="text-muted small">Your previous search resulted in {prevResultCount.current} matches</p>
+					) : ''
+				}
+
 				{
 					query.length > 2 ? (
 						<>
