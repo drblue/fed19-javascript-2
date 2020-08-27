@@ -8,8 +8,10 @@ const StarWarsPedia = () => {
 	const [resourceUrl, setResourceUrl] = useState(API_BASE + '/vehicles/');
 	const [response, setResponse] = useState({});
 	const resourceType = useRef('vehicles');
+	const prevResourceType = useRef(null);
 
 	const changeResource = resource => {
+		prevResourceType.current = resourceType.current;
 		resourceType.current = resource;
 		setResourceUrl(API_BASE + '/' + resource + '/');
 	}
@@ -30,6 +32,14 @@ const StarWarsPedia = () => {
 	return (
 		<div>
 			<h2>StarWarsPedia</h2>
+
+			{
+				prevResourceType.current ? (
+					<p className="text-muted small">You previously viewed {prevResourceType.current} <span role="img" aria-label="Female detective">🕵🏻‍♀️</span><span role="img" aria-label="Male detective">🕵🏻‍♂️</span></p>
+				) : (
+					''
+				)
+			}
 
 			<div className="resource-buttons">
 				<button onClick={() => changeResource('people')} className="btn btn-outline-primary"><span role="img" aria-label="People">🧑‍🤝‍🧑</span> People</button>
