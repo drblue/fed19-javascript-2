@@ -1,3 +1,4 @@
+*-nogit/
 build/
 node_modules/
 .env
