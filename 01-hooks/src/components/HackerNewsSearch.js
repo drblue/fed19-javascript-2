@@ -3,8 +3,9 @@ import useFetch from '../hooks/useFetch';
 
 const HackerNewsSearch = () => {
 	const [query, setQuery] = useState('');
-	const [setUrl] = useFetch('');
+	const [{ data, isLoading, error }, setUrl] = useFetch('');
 	const queryRef = useRef();
+	const searchQuery = useRef('');
 
 	useEffect(() => {
 		queryRef.current.focus();
@@ -19,8 +20,8 @@ const HackerNewsSearch = () => {
 		}
 
 		// use custom hook to send search query
-		console.log("would search hacker news api, doesnt know how");
-		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}`);
+		searchQuery.current = query;
+		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
 	}
 
 	return (
@@ -46,19 +47,38 @@ const HackerNewsSearch = () => {
 			</form>
 
 			<div className="mt-3">
-				<p>Search for <strong>QWERTY</strong> resulted in <strong>1337</strong> hits.</p>
+				{
+					isLoading ? (
+						<h2>Loading...</h2>
+					) : (
+						error ? (
+							<div className="alert alert-warning">
+								Bollocks. Something bad happened. Tea?
 
-				<ul className="search-results text-left list-group">
-					<li className="list-group-item">
-						<h3>Title 1</h3>
-					</li>
-					<li className="list-group-item">
-						<h3>Title 2</h3>
-					</li>
-					<li className="list-group-item">
-						<h3>Title 3</h3>
-					</li>
-				</ul>
+								<p className="small">{error}</p>
+							</div>
+						) : (
+							data && data.hits ? (
+								<>
+									<p>Search for <strong>{searchQuery.current}</strong> resulted in <strong>{data.nbHits}</strong> hits.</p>
+
+									<ul className="search-results text-left list-group">
+										{
+											data.hits.map((hit, index) => (
+												<li key={index} className="list-group-item">
+													<h3>{hit.title}</h3>
+													<p><a href={hit.url} target="_blank" rel="noopener noreferrer">{hit.url}</a></p>
+													<p className="text-muted small">Posted at {hit.created_at} by {hit.author}</p>
+												</li>
+											))
+										}
+									</ul>
+								</>
+							) : ''
+						)
+					)
+				}
+
 			</div>
 		</>
 	)
