@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import useDocumentTitle from '../hooks/useDocumentTitle';
-import useUpdateLogger from '../hooks/useUpdateLogger';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const API_BASE = 'https://swapi.dev/api';
 
@@ -9,17 +8,16 @@ const StarWarsPedia = () => {
 
 	const [resourceUrl, setResourceUrl] = useState(API_BASE + '/vehicles/');
 	const [response, setResponse] = useState({});
+	const [savedResource, saveResource] = useLocalStorage('resource', 'vehicles');
+	console.log(`savedResource is '${savedResource}'`);
 	const resourceType = useRef('vehicles');
 	const prevResourceType = useRef(null);
-	useUpdateLogger(resourceUrl, 'resourceUrl');
-	useUpdateLogger(response, 'API response');
-	const [pageTitle, setPageTitle] = useDocumentTitle('StarWarsPedia - Your Ultimate Guide To The Star Wars Universe');
 
 	const changeResource = resource => {
 		prevResourceType.current = resourceType.current;
 		resourceType.current = resource;
+		saveResource(resource);
 		setResourceUrl(API_BASE + '/' + resource + '/');
-		setPageTitle(`${resource} - StarWarsPedia`);
 	}
 
 	// watch `resourceUrl` for changes and trigger fetching of data from the new `resourceUrl`
