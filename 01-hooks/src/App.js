@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import StarWarsPedia from './components/StarWarsPedia';
+import HackerNewsSearch from './components/HackerNewsSearch';
 
 function App() {
 	return (
@@ -9,7 +9,7 @@ function App() {
 
 			<div className="text-center my-5">
 
-				<StarWarsPedia />
+				<HackerNewsSearch />
 			</div>
 		</div>
 	);
