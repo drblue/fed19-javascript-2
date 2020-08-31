@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
+import useFetch from '../hooks/useFetch';
 
 const HackerNewsSearch = () => {
 	const [query, setQuery] = useState('');
+	const [setUrl] = useFetch('');
 	const queryRef = useRef();
 
 	useEffect(() => {
@@ -18,6 +20,7 @@ const HackerNewsSearch = () => {
 
 		// use custom hook to send search query
 		console.log("would search hacker news api, doesnt know how");
+		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}`);
 	}
 
 	return (
