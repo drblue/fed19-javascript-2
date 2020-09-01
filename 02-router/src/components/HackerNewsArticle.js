@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
 
 const HackerNewsArticle = (props) => {
+
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
-	const articleId = props.match.params.id;
+	const { articleId } = useParams();
+	console.log('Props:', props);
+	console.log('articleId param:', articleId);
 
 	useEffect(() => {
 		// fetch article from Hacker News API
