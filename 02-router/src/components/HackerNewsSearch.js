@@ -46,6 +46,8 @@ const HackerNewsSearch = () => {
 			<div className="text-center">
 				<h2 className="mb-2">Search Hacker News</h2>
 
+				<p>Did't find anything? Check out the <Link to='/'>latest news</Link>!</p>
+
 				<form onSubmit={searchHackerNews}>
 					<div className="input-group">
 						<input

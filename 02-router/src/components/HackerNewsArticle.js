@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
 
 const HackerNewsArticle = (props) => {
 
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
+	const history = useHistory();
 	const { articleId } = useParams();
 	console.log('Props:', props);
 	console.log('articleId param:', articleId);
@@ -52,6 +53,8 @@ const HackerNewsArticle = (props) => {
 								</div>
 
 								<div className="content" dangerouslySetInnerHTML={{ __html: data.text }}></div>
+
+								<button onClick={() => history.goBack()} className="btn btn-primary">&laquo; Go back (to where you came from)</button>
 							</>
 						) : ''
 					)

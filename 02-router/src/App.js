@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './App.scss';
 import HackerNewsArticle from './components/HackerNewsArticle';
 import HackerNewsSearch from './components/HackerNewsSearch';
+import HackerNewsLatest from './components/HackerNewsLatest';
 
 function App() {
 	const user = {
@@ -18,6 +19,10 @@ function App() {
 				<div className="my-5">
 					<Switch>
 						<Route exact path='/'>
+							<HackerNewsLatest />
+						</Route>
+
+						<Route path='/search'>
 							<HackerNewsSearch />
 						</Route>
 
