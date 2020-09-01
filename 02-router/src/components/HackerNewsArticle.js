@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
@@ -18,7 +18,7 @@ const HackerNewsArticle = (props) => {
 		}
 
 		setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);
-	}, []);
+	}, [articleId, setUrl]);
 
 	return (
 		<article className="mt-3">
