@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 
 const HackerNewsSearch = () => {
@@ -24,32 +25,50 @@ const HackerNewsSearch = () => {
 		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
 	}
 
+	const renderSearchResults = hits => {
+		return hits.map((hit, index) => (
+			<li key={index} className="list-group-item">
+				<h3>{hit.title}</h3>
+
+				<p className="text-muted small">
+					Posted at {hit.created_at} by {hit.author}
+				</p>
+
+				<p>
+					<Link to={`/articles/${hit.objectID}`} className="btn btn-sm btn-primary">Read more</Link>
+				</p>
+			</li>
+		))
+	}
+
 	return (
 		<>
-			<h2 className="text-center mb-2">Search Hacker News</h2>
+			<div className="text-center">
+				<h2 className="mb-2">Search Hacker News</h2>
 
-			<form onSubmit={searchHackerNews}>
-				<div className="input-group">
-					<input
-						onChange={e => setQuery(e.target.value)}
-						ref={queryRef}
-						value={query}
-						type="text"
-						className="form-control"
-						placeholder="Type to search for Hacker News articles"
-					/>
+				<form onSubmit={searchHackerNews}>
+					<div className="input-group">
+						<input
+							onChange={e => setQuery(e.target.value)}
+							ref={queryRef}
+							value={query}
+							type="text"
+							className="form-control"
+							placeholder="Type to search for Hacker News articles"
+						/>
 
-					<div className="input-group-append">
-						<button type="submit" className="btn btn-success">Search</button>
-						{/* <button onClick={() => setQuery('')} className="btn btn-warning">Clear</button> */}
+						<div className="input-group-append">
+							<button type="submit" className="btn btn-success">Search</button>
+							{/* <button onClick={() => setQuery('')} className="btn btn-warning">Clear</button> */}
+						</div>
 					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 
 			<div className="mt-3">
 				{
 					isLoading ? (
-						<h2>Loading...</h2>
+						<h2 className="text-center">Loading...</h2>
 					) : (
 						error ? (
 							<div className="alert alert-warning">
@@ -60,18 +79,10 @@ const HackerNewsSearch = () => {
 						) : (
 							data && data.hits ? (
 								<>
-									<p>Search for <strong>{searchQuery.current}</strong> resulted in <strong>{data.nbHits}</strong> hits.</p>
+									<p className="text-center">Search for <strong>{searchQuery.current}</strong> resulted in <strong>{data.nbHits}</strong> hits.</p>
 
-									<ul className="search-results text-left list-group">
-										{
-											data.hits.map((hit, index) => (
-												<li key={index} className="list-group-item">
-													<h3>{hit.title}</h3>
-													<p className="text-muted small">Posted at {hit.created_at} by {hit.author}</p>
-													<p><a href="#" className="btn btn-sm btn-primary">Read more</a></p>
-												</li>
-											))
-										}
+									<ul className="search-results list-group">
+										{renderSearchResults(data.hits)}
 									</ul>
 								</>
 							) : ''

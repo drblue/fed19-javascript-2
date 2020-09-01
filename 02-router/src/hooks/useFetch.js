@@ -24,7 +24,7 @@ const useFetch = (initialUrl) => {
 			.then(res => res.json())
 			.then(res => {
 				// set stateful data
-				console.log("Got data back from API:", res);
+				console.log("Got data back from API!");
 				setData(res);
 			})
 			.catch(err => {
