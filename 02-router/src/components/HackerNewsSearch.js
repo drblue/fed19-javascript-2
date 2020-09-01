@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 
 const HackerNewsSearch = () => {
@@ -7,6 +7,8 @@ const HackerNewsSearch = () => {
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
 	const queryRef = useRef();
 	const searchQuery = useRef('');
+	const location = useLocation();
+	console.log('location:', location);
 
 	useEffect(() => {
 		queryRef.current.focus();
@@ -26,16 +28,21 @@ const HackerNewsSearch = () => {
 	}
 
 	const renderSearchResults = hits => {
-		return hits.map((hit, index) => (
+		return hits.map((article, index) => (
 			<li key={index} className="list-group-item">
-				<h3>{hit.title}</h3>
+				<h3>{article.title}</h3>
 
 				<p className="text-muted small">
-					Posted at {hit.created_at} by {hit.author}
+					Posted at {article.created_at} by {article.author}
 				</p>
 
 				<p>
-					<Link to={`/articles/${hit.objectID}`} className="btn btn-sm btn-primary">Read more</Link>
+					<Link to={{
+						pathname: `/articles/${article.objectID}`,
+						state: {
+							article,
+						},
+					}} className="btn btn-sm btn-primary">Read more</Link>
 				</p>
 			</li>
 		))

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
 
@@ -8,8 +8,8 @@ const HackerNewsArticle = (props) => {
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
 	const history = useHistory();
 	const { articleId } = useParams();
-	console.log('Props:', props);
-	console.log('articleId param:', articleId);
+	const location = useLocation();
+	console.log('article via location state:', location.state.article);
 
 	useEffect(() => {
 		// fetch article from Hacker News API
@@ -54,7 +54,12 @@ const HackerNewsArticle = (props) => {
 
 								<div className="content" dangerouslySetInnerHTML={{ __html: data.text }}></div>
 
-								<button onClick={() => history.goBack()} className="btn btn-primary">&laquo; Go back (to where you came from)</button>
+								<div>
+									<Link to='/' className="btn btn-primary">&laquo; Back to front page</Link>
+								</div>
+								<div>
+									<button onClick={() => history.goBack()} className="btn btn-warning">&laquo; Go back (and forget this article)</button>
+								</div>
 							</>
 						) : ''
 					)
