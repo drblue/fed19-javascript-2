@@ -5,19 +5,21 @@ import useFetch from '../hooks/useFetch';
 
 const HackerNewsArticle = (props) => {
 
-	const [{ data, isLoading, error }, setUrl] = useFetch('');
+	const [{ data, isLoading, error }, setUrl, setData] = useFetch('');
 	const history = useHistory();
 	const { articleId } = useParams();
-	const location = useLocation();
-	console.log('article via location state:', location.state.article);
+	const { state } = useLocation();
 
 	useEffect(() => {
-		// fetch article from Hacker News API
-		if (!articleId) {
-			return;
+		if (state && state.article) {
+			// fetch article from location.state
+			console.log("Article exists in location.state, using that to avoid an extra fetch");
+			setData(state.article);
+		} else if (articleId) {
+			// fetch article from Hacker News API
+			console.log("No article in location.state, fetching from HN API");
+			setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);
 		}
-
-		setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);
 	}, [articleId, setUrl]);
 
 	return (
