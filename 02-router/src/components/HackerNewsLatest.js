@@ -7,7 +7,7 @@ const HackerNewsLatest = () => {
 
 	useEffect(() => {
 		setUrl(`https://hn.algolia.com/api/v1/search?tags=front_page`);
-	}, []);
+	}, [setUrl]);
 
 	const renderArticles = hits => {
 		return hits.map((article, index) => (

@@ -10,6 +10,11 @@ const HackerNewsSearch = () => {
 	const queryRef = useRef();
 	const searchQuery = useRef('');
 
+	const searchHackerNewsApi = query => {
+		searchQuery.current = query;
+		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
+	}
+
 	useEffect(() => {
 		if (searchParams.q) {
 			setQuery(searchParams.q);
@@ -17,12 +22,7 @@ const HackerNewsSearch = () => {
 		} else {
 			queryRef.current.focus();
 		}
-	}, []);
-
-	const searchHackerNewsApi = query => {
-		searchQuery.current = query;
-		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
-	}
+	}, [searchHackerNewsApi, searchParams.q]);
 
 	const onSubmit = e => {
 		e.preventDefault();
