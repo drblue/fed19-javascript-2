@@ -50,7 +50,7 @@ const HackerNewsLatest = () => {
 						) : (
 							data && data.hits ? (
 								<>
-									<ul className="search-results list-group">
+									<ul className="latest-articles list-group">
 										{renderArticles(data.hits)}
 									</ul>
 								</>
