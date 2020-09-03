@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 import HackerNewsArticle from './components/HackerNewsArticle';
 import HackerNewsSearch from './components/HackerNewsSearch';
@@ -11,8 +11,8 @@ function App() {
 			<h1><span role="img" aria-label="A gear">⚙️</span> React Router (with Hooks!)</h1>
 
 			<div className="my-5">
-				<Switch>
-					<Route exact path='/'>
+				<Routes>
+					<Route path='/'>
 						<HackerNewsLatest />
 					</Route>
 
@@ -20,10 +20,16 @@ function App() {
 						<HackerNewsSearch />
 					</Route>
 
-					<Route path='/articles/:articleId'>
-						<HackerNewsArticle />
+					<Route path='/articles'>
+						<Route path='/'>
+							<HackerNewsLatest />
+						</Route>
+
+						<Route path=':articleId'>
+							<HackerNewsArticle />
+						</Route>
 					</Route>
-				</Switch>
+				</Routes>
 			</div>
 		</div>
 	);

@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import Moment from 'react-moment';
 import useFetch from '../hooks/useFetch';
 
 const HackerNewsArticle = (props) => {
 
 	const [{ data, isLoading, error }, setUrl, setData] = useFetch('');
-	const history = useHistory();
+	const navigate = useNavigate();
 	const { articleId } = useParams();
 	const { state } = useLocation();
 
@@ -60,7 +60,7 @@ const HackerNewsArticle = (props) => {
 									<Link to='/' className="btn btn-primary">&laquo; Back to front page</Link>
 								</div>
 								<div>
-									<button onClick={() => history.goBack()} className="btn btn-warning">&laquo; Go back (and forget this article)</button>
+									<button onClick={() => navigate(-1)} className="btn btn-warning">&laquo; Go back (and forget this article)</button>
 								</div>
 							</>
 						) : ''
