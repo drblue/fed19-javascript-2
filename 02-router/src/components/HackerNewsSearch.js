@@ -11,7 +11,6 @@ const HackerNewsSearch = () => {
 	const searchQuery = useRef('');
 
 	useEffect(() => {
-		console.log(searchParams);
 		if (searchParams.q) {
 			setQuery(searchParams.q);
 			searchHackerNewsApi(searchParams.q);
