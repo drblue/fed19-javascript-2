@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 import { useUrlSearchParams } from "use-url-search-params";
@@ -10,10 +10,10 @@ const HackerNewsSearch = () => {
 	const queryRef = useRef();
 	const searchQuery = useRef('');
 
-	const searchHackerNewsApi = query => {
+	const searchHackerNewsApi = useCallback(query => {
 		searchQuery.current = query;
 		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
-	}
+	}, [searchQuery, setUrl]);
 
 	useEffect(() => {
 		if (searchParams.q) {
