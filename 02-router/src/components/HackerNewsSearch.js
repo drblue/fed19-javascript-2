@@ -1,15 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const HackerNewsSearch = () => {
 	const [query, setQuery] = useState('');
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
+	const [storedQuery, setStoredQuery] = useLocalStorage('query', null);
 	const queryRef = useRef();
 	const searchQuery = useRef('');
 
 	useEffect(() => {
-		queryRef.current.focus();
+		if (storedQuery) {
+			setQuery(storedQuery);
+		} else {
+			queryRef.current.focus();
+		}
 	}, []);
 
 	const searchHackerNews = e => {
@@ -22,6 +28,7 @@ const HackerNewsSearch = () => {
 
 		// use custom hook to send search query
 		searchQuery.current = query;
+		setStoredQuery(query);
 		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
 	}
 
