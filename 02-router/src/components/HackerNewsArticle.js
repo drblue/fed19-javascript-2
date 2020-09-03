@@ -20,7 +20,7 @@ const HackerNewsArticle = (props) => {
 			console.log("No article in location.state, fetching from HN API");
 			setUrl(`https://hn.algolia.com/api/v1/items/${articleId}`);
 		}
-	}, [articleId, setUrl]);
+	}, [articleId, setUrl, setData]);
 
 	return (
 		<article className="mt-3">

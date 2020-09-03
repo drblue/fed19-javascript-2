@@ -1,24 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
-import useLocalStorage from '../hooks/useLocalStorage';
+import { useUrlSearchParams } from "use-url-search-params";
 
 const HackerNewsSearch = () => {
 	const [query, setQuery] = useState('');
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
-	const [storedQuery, setStoredQuery] = useLocalStorage('query', null);
+	const [searchParams, setSearchParams] = useUrlSearchParams();
 	const queryRef = useRef();
 	const searchQuery = useRef('');
 
 	useEffect(() => {
-		if (storedQuery) {
-			setQuery(storedQuery);
+		console.log(searchParams);
+		if (searchParams.q) {
+			setQuery(searchParams.q);
+			searchHackerNewsApi(searchParams.q);
 		} else {
 			queryRef.current.focus();
 		}
 	}, []);
 
-	const searchHackerNews = e => {
+	const searchHackerNewsApi = query => {
+		searchQuery.current = query;
+		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
+	}
+
+	const onSubmit = e => {
 		e.preventDefault();
 
 		if (query.length < 3) {
@@ -26,10 +33,11 @@ const HackerNewsSearch = () => {
 			return;
 		}
 
-		// use custom hook to send search query
-		searchQuery.current = query;
-		setStoredQuery(query);
-		setUrl(`https://hn.algolia.com/api/v1/search_by_date?query=${query}&tags=story`);
+		// set query in UrlSearchParams
+		setSearchParams({ q: query });
+
+		// trigger search query
+		searchHackerNewsApi(query);
 	}
 
 	const renderSearchResults = hits => {
@@ -60,7 +68,7 @@ const HackerNewsSearch = () => {
 
 				<p>Did't find anything? Check out the <Link to='/'>latest news</Link>!</p>
 
-				<form onSubmit={searchHackerNews}>
+				<form onSubmit={onSubmit}>
 					<div className="input-group">
 						<input
 							onChange={e => setQuery(e.target.value)}
