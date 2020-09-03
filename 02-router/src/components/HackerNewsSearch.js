@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 
 const HackerNewsSearch = () => {
@@ -7,8 +7,6 @@ const HackerNewsSearch = () => {
 	const [{ data, isLoading, error }, setUrl] = useFetch('');
 	const queryRef = useRef();
 	const searchQuery = useRef('');
-	const location = useLocation();
-	console.log('location:', location);
 
 	useEffect(() => {
 		queryRef.current.focus();
