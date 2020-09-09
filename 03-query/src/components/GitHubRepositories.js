@@ -2,9 +2,9 @@ import React from 'react';
 import { useQuery } from 'react-query';
 import axios from 'axios';
 
-const getGitHubRepositories = async () => {
+const getGitHubRepositories = async (key, username) => {
 	const res = await axios.get(
-		'https://api.github.com/users/drblue/repos',
+		`https://api.github.com/users/${username}/repos`,
 		{
 			auth: {
 				username: 'drblue',
@@ -17,7 +17,7 @@ const getGitHubRepositories = async () => {
 
 const GitHubRepositories = () => {
 
-	const { data, isLoading, error } = useQuery('repos', getGitHubRepositories);
+	const { data, isLoading, error } = useQuery(['repos', 'drblue'], getGitHubRepositories);
 
 	if (isLoading) {
 		return (
