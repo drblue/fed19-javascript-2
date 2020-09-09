@@ -49,12 +49,10 @@ const HackerNewsSearch = () => {
 				</p>
 
 				<p>
-					<Link to={{
-						pathname: `/articles/${article.objectID}`,
-						state: {
-							article,
-						},
-					}} className="btn btn-sm btn-primary">Read more</Link>
+					<Link
+						to={`/articles/${article.objectID}`}
+						state={{ article }}
+						className="btn btn-sm btn-primary">Read more</Link>
 				</p>
 			</li>
 		))
