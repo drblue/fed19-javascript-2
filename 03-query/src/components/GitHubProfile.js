@@ -4,7 +4,10 @@ import { getProfile } from '../services/GitHubAPI';
 
 const GitHubProfile = () => {
 
-	const { data, isLoading, error } = useQuery(['repoStats', 'drblue'], getProfile);
+	const { data, isLoading, error } = useQuery(['repoStats', 'drblue'], getProfile, {
+		staleTime: 1000 * 10,
+		refetchOnWindowFocus: false,
+	});
 
 	if (isLoading) {
 		return (

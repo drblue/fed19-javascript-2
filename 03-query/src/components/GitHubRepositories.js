@@ -4,7 +4,10 @@ import { getRepositories } from '../services/GitHubAPI';
 
 const GitHubRepositories = () => {
 
-	const { data, isLoading, error } = useQuery(['repos', 'drblue'], getRepositories);
+	const { data, isLoading, error } = useQuery(['repos', 'drblue'], getRepositories, {
+		staleTime: 1000 * 10,
+		refetchOnWindowFocus: false,
+	});
 
 	if (isLoading) {
 		return (
