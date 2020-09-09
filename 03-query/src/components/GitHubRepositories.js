@@ -1,23 +1,10 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import axios from 'axios';
-
-const getGitHubRepositories = async (key, username) => {
-	const res = await axios.get(
-		`https://api.github.com/users/${username}/repos`,
-		{
-			auth: {
-				username: 'drblue',
-				password: process.env.REACT_APP_GITHUB_TOKEN
-			}
-		}
-	);
-	return res.data;
-}
+import { getRepositories } from '../services/GitHubAPI';
 
 const GitHubRepositories = () => {
 
-	const { data, isLoading, error } = useQuery(['repos', 'drblue'], getGitHubRepositories);
+	const { data, isLoading, error } = useQuery(['repos', 'drblue'], getRepositories);
 
 	if (isLoading) {
 		return (
