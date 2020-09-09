@@ -1,27 +1,21 @@
 import axios from 'axios';
 
-export const getProfile = async (key, username) => {
-	const res = await axios.get(
-		`https://api.github.com/users/${username}`,
-		{
-			auth: {
-				username: 'drblue',
-				password: process.env.REACT_APP_GITHUB_TOKEN
-			}
-		}
-	);
+const requestConfig = {
+	auth: {
+		username: 'drblue',
+		password: process.env.REACT_APP_GITHUB_TOKEN
+	}
+}
+
+const get = async (endpoint) => {
+	const res = await axios.get(`https://api.github.com/${endpoint}`, requestConfig);
 	return res.data;
 }
 
+export const getProfile = async (key, username) => {
+	return get(`users/${username}`);
+}
+
 export const getRepositories = async (key, username) => {
-	const res = await axios.get(
-		`https://api.github.com/users/${username}/repos`,
-		{
-			auth: {
-				username: 'drblue',
-				password: process.env.REACT_APP_GITHUB_TOKEN
-			}
-		}
-	);
-	return res.data;
+	return get(`users/${username}/repos`);
 }
