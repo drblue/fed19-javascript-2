@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 
-const GitHubRepoStats = () => {
+const GitHubProfile = () => {
 	const { data, isLoading, error } = useQuery('repoStats', () =>
 		fetch('https://api.github.com/users/drblue')
 		.then(res => res.json())
@@ -48,4 +48,4 @@ const GitHubRepoStats = () => {
 	);
 }
 
-export default GitHubRepoStats;
+export default GitHubProfile;

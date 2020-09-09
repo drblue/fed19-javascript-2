@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.scss';
-import GitHubRepoStats from './components/GitHubRepoStats';
+import GitHubProfile from './components/GitHubProfile';
+import GitHubRepositories from './components/GitHubRepositories';
+import Navbar from './components/Navbar';
 
 function App() {
+	const [page, setPage] = useState('profile');
 
 	return (
 		<div className="App container my-3">
 			<h1><span role="img" aria-label="!?">❗️❓</span> React Query</h1>
 
+			<Navbar setPage={setPage} />
+
 			<div className="my-5">
-				<GitHubRepoStats />
+				{page === 'profile' ? <GitHubProfile /> : <GitHubRepositories />}
 			</div>
 		</div>
 	);
