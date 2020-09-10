@@ -1,7 +1,8 @@
 import React from 'react';
 import { useQuery } from 'react-query';
-import { getPlanets } from '../services/SWAPI';
 import MoonLoader from 'react-spinners/MoonLoader';
+import { getPlanets } from '../services/SWAPI';
+import Planet from './Planet';
 
 const Planets = () => {
 
@@ -31,9 +32,7 @@ const Planets = () => {
 			<ul className="list-group">
 				{data.results.map((planet, index) => (
 					<li className="list-group-item" key={index}>
-						<h5 className="mb-1">{planet.name}</h5>
-						<p className="mb-1"><strong>Population:</strong> {planet.population}</p>
-						<p className="mb-1"><strong>Climate:</strong> {planet.climate}</p>
+						<Planet planet={planet} />
 					</li>
 				))}
 			</ul>
