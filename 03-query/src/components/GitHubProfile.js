@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { getProfile } from '../services/GitHubAPI';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 
 const GitHubProfile = () => {
 
@@ -8,7 +9,7 @@ const GitHubProfile = () => {
 
 	if (isLoading) {
 		return (
-			<h2>Loading...</h2>
+			<PacmanLoader color={"#F8D41C"} size={50} />
 		);
 	}
 

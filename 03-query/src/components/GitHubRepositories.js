@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { getRepositories } from '../services/GitHubAPI';
+import PacmanLoader from 'react-spinners/PacmanLoader';
 
 const GitHubRepositories = () => {
 
@@ -8,7 +9,7 @@ const GitHubRepositories = () => {
 
 	if (isLoading) {
 		return (
-			<h2>Loading...</h2>
+			<PacmanLoader color={"#F8D41C"} size={50} />
 		);
 	}
 
