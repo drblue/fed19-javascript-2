@@ -33,22 +33,16 @@ const Vehicles = () => {
 
 			<div className="d-flex mb-3 justify-content-between">
 				<button
-					onClick={() => setPage(prevPage => {
-						if (!latestData || !latestData.previous) {
-							return prevPage;
-						}
-						return prevPage - 1;
-					})}
+					onClick={() => setPage(prevPage => (!latestData || !latestData.previous)
+							? prevPage
+							: prevPage - 1)}
 					disabled={!latestData || !latestData.previous}
 					className="btn btn-outline-secondary">Previous Page</button>
 
 				<button
-					onClick={() => setPage(prevPage => {
-						if (!latestData || !latestData.next) {
-							return prevPage;
-						}
-						return prevPage + 1;
-					})}
+					onClick={() => setPage(prevPage => (!latestData || !latestData.next)
+						? prevPage
+						: prevPage + 1)}
 					disabled={!latestData || !latestData.next}
 					className="btn btn-outline-secondary">Next Page</button>
 			</div>
