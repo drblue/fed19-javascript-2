@@ -9,7 +9,7 @@ import Planets from './components/Planets';
 import Vehicles from './components/Vehicles';
 
 function App() {
-	const [page, setPage] = useState('planets');
+	const [page, setPage] = useState('vehicles');
 
 	return (
 		<ReactQueryConfigProvider config={config.reactQueryConfig}>
