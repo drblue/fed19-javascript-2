@@ -1,11 +1,10 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { getProfile } from '../services/GitHubAPI';
-import config from '../config';
 
 const GitHubProfile = () => {
 
-	const { data, isLoading, error } = useQuery(['repoStats', 'drblue'], getProfile, config.REACT_QUERY_CONF);
+	const { data, isLoading, error } = useQuery(['repoStats', 'drblue'], getProfile);
 
 	if (isLoading) {
 		return (
