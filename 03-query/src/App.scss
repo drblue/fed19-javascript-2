@@ -3,3 +3,9 @@
  */
 
 @import "~bootstrap/scss/bootstrap";
+
+.fetching-spinner {
+	position: absolute;
+	right: 1%;
+	top: 1%;
+}
