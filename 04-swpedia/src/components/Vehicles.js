@@ -31,10 +31,24 @@ const Vehicles = () => {
 
 			<p>There are {resolvedData.count} vehicles in the database.</p>
 
-			<div className="d-flex mb-3 justify-content-center">
-				<button onClick={() => setPage(1)} className="btn btn-outline-secondary">Page 1</button>
-				<button onClick={() => setPage(2)} className="btn btn-outline-secondary">Page 2</button>
-				<button onClick={() => setPage(3)} className="btn btn-outline-secondary">Page 3</button>
+			<div className="d-flex mb-3 justify-content-between">
+				<button
+					onClick={() => setPage(prevPage => {
+						if (!latestData || !latestData.previous) {
+							return prevPage;
+						}
+						return prevPage - 1;
+					})}
+					className="btn btn-outline-secondary">Previous Page</button>
+
+				<button
+					onClick={() => setPage(prevPage => {
+						if (!latestData || !latestData.next) {
+							return prevPage;
+						}
+						return prevPage + 1;
+					})}
+					className="btn btn-outline-secondary">Next Page</button>
 			</div>
 
 			<ul className="list-group">
