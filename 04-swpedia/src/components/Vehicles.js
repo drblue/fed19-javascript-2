@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import { usePaginatedQuery } from 'react-query';
 import MoonLoader from 'react-spinners/MoonLoader';
 import { getVehicles } from '../services/SWAPI';
 import Vehicle from './Vehicle';
@@ -7,7 +7,7 @@ import Vehicle from './Vehicle';
 const Vehicles = () => {
 
 	const [page, setPage] = useState(1);
-	const { data, isLoading, error } = useQuery(['vehicles', page], getVehicles);
+	const { resolvedData, latestData, isLoading, error } = usePaginatedQuery(['vehicles', page], getVehicles);
 
 	if (isLoading) {
 		return (
@@ -29,7 +29,7 @@ const Vehicles = () => {
 			<h2>Vehicles</h2>
 			<h3>Page {page}</h3>
 
-			<p>There are {data.count} vehicles in the database.</p>
+			<p>There are {resolvedData.count} vehicles in the database.</p>
 
 			<div className="d-flex mb-3 justify-content-center">
 				<button onClick={() => setPage(1)} className="btn btn-outline-secondary">Page 1</button>
@@ -38,7 +38,7 @@ const Vehicles = () => {
 			</div>
 
 			<ul className="list-group">
-				{data.results.map((vehicle, index) => (
+				{resolvedData.results.map((vehicle, index) => (
 					<li className="list-group-item" key={index}>
 						<Vehicle vehicle={vehicle} />
 					</li>

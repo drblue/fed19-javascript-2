@@ -24,7 +24,7 @@ function App() {
 					{ page === 'planets' ? (<Planets />) : (<Vehicles />) }
 				</div>
 			</div>
-			<ReactQueryDevtools initialIsOpen position="bottom-right" />
+			<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
 		</ReactQueryConfigProvider>
 	);
 }
