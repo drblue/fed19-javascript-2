@@ -1,11 +1,10 @@
 import React from 'react';
 import { useQuery } from 'react-query';
 import { getProfile } from '../services/GitHubAPI';
-import SyncLoader from 'react-spinners/SyncLoader';
 
 const GitHubProfile = () => {
 
-	const { data, isLoading, isFetching, isError, error } = useQuery(['repoStats', 'drblue'], getProfile);
+	const { data, isLoading, isError, error } = useQuery(['repoStats', 'drblue'], getProfile);
 
 	if (isLoading) {
 		return (
@@ -44,12 +43,6 @@ const GitHubProfile = () => {
 					<strong>{data.public_repos}</strong> public repositories
 				</li>
 			</ul>
-
-			{isFetching && (
-				<div className="fetching-spinner">
-					<SyncLoader color={"#888"} size={10} />
-				</div>)
-			}
 		</>
 	);
 }

@@ -4,6 +4,7 @@ import { ReactQueryDevtools } from 'react-query-devtools';
 import './App.scss';
 import GitHubProfile from './components/GitHubProfile';
 import GitHubRepositories from './components/GitHubRepositories';
+import GlobalFetchingSpinner from './components/GlobalFetchingSpinner';
 import Navbar from './components/Navbar';
 import config from './config';
 
@@ -12,6 +13,7 @@ function App() {
 
 	return (
 		<ReactQueryConfigProvider config={config.reactQueryConfig}>
+			<GlobalFetchingSpinner />
 			<div className="App container my-3">
 				<h1><span role="img" aria-label="!?">❗️❓</span> React Query</h1>
 
