@@ -4,7 +4,7 @@ import { getProfile } from '../services/GitHubAPI';
 
 const GitHubProfile = () => {
 
-	const { data, isLoading, error } = useQuery(['repoStats', 'drblue'], getProfile);
+	const { data, isLoading, isError, error } = useQuery(['repoStats', 'drblue'], getProfile);
 
 	if (isLoading) {
 		return (
@@ -12,11 +12,11 @@ const GitHubProfile = () => {
 		);
 	}
 
-	if (error) {
+	if (isError) {
 		return (
 			<div className="alert alert-warning">
 				<h2>Sorry, app made a boo-boo...</h2>
-				<p><strong>Error message:</strong> {error.message}</p>
+				<p><strong>Error message:</strong> {error && error.message}</p>
 			</div>
 		)
 	}
