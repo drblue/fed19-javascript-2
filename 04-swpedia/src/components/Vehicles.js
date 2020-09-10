@@ -39,6 +39,7 @@ const Vehicles = () => {
 						}
 						return prevPage - 1;
 					})}
+					disabled={!latestData || !latestData.previous}
 					className="btn btn-outline-secondary">Previous Page</button>
 
 				<button
@@ -48,6 +49,7 @@ const Vehicles = () => {
 						}
 						return prevPage + 1;
 					})}
+					disabled={!latestData || !latestData.next}
 					className="btn btn-outline-secondary">Next Page</button>
 			</div>
 
