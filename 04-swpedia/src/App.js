@@ -6,6 +6,7 @@ import config from './config';
 import GlobalFetchingSpinner from './components/GlobalFetchingSpinner';
 import Navbar from './components/Navbar';
 import Planets from './components/Planets';
+import Vehicles from './components/Vehicles';
 
 function App() {
 	const [page, setPage] = useState('planets');
@@ -20,7 +21,7 @@ function App() {
 				<Navbar setPage={setPage} />
 
 				<div className="my-5">
-					<Planets />
+					{ page === 'planets' ? (<Planets />) : (<Vehicles />) }
 				</div>
 			</div>
 			<ReactQueryDevtools initialIsOpen position="bottom-right" />
