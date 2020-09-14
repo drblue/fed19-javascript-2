@@ -7,6 +7,7 @@ import config from './config';
 import GlobalFetchingSpinner from './components/partials/GlobalFetchingSpinner';
 import Home from './components/Home';
 import Navbar from './components/nav/Navbar';
+import NotFound from './components/NotFound';
 import People from './components/people/People';
 import PersonDetails from './components/people/PersonDetails';
 
@@ -33,6 +34,7 @@ function App() {
 						</Route>
 					</Route>
 
+					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>
 			<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
