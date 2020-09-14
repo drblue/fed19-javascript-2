@@ -5,7 +5,10 @@ import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 import config from './config';
 import GlobalFetchingSpinner from './components/GlobalFetchingSpinner';
+import Home from './components/Home';
 import Navbar from './components/Navbar';
+import People from './components/People';
+import PersonDetails from './components/PersonDetails';
 import Planets from './components/Planets';
 import Vehicles from './components/Vehicles';
 
@@ -19,7 +22,17 @@ function App() {
 				<Routes>
 
 					<Route path="/">
-						<Planets />
+						<Home />
+					</Route>
+
+					<Route path="/people">
+						<Route path="/">
+							<People />
+						</Route>
+
+						<Route path="/:personId">
+							<PersonDetails />
+						</Route>
 					</Route>
 
 				</Routes>
