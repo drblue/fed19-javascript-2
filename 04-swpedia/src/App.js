@@ -4,13 +4,11 @@ import { ReactQueryDevtools } from 'react-query-devtools';
 import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 import config from './config';
-import GlobalFetchingSpinner from './components/GlobalFetchingSpinner';
+import GlobalFetchingSpinner from './components/partials/GlobalFetchingSpinner';
 import Home from './components/Home';
-import Navbar from './components/Navbar';
-import People from './components/People';
-import PersonDetails from './components/PersonDetails';
-import Planets from './components/Planets';
-import Vehicles from './components/Vehicles';
+import Navbar from './components/nav/Navbar';
+import People from './components/people/People';
+import PersonDetails from './components/people/PersonDetails';
 
 function App() {
 	return (
