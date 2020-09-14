@@ -24,7 +24,9 @@ const ThemeContextProvider = (props) => {
 			setLightTheme,
 			toggleTheme
 		}}>
-			{props.children}
+			<div id={`theme-${theme}`}>
+				{props.children}
+			</div>
 		</ThemeContext.Provider>
 	);
 }
