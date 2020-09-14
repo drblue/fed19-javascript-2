@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ReactQueryConfigProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query-devtools';
+import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 import config from './config';
 import GlobalFetchingSpinner from './components/GlobalFetchingSpinner';
@@ -9,20 +10,19 @@ import Planets from './components/Planets';
 import Vehicles from './components/Vehicles';
 
 function App() {
-	const [page, setPage] = useState('vehicles');
-
 	return (
 		<ReactQueryConfigProvider config={config.reactQueryConfig}>
+			<Navbar />
 			<GlobalFetchingSpinner />
 
-			<div className="App container my-3">
-				<h1><span role="img" aria-label="!?">👾</span> StarWarsPedia</h1>
+			<div className="App container py-3">
+				<Routes>
 
-				<Navbar setPage={setPage} />
+					<Route path="/">
+						<Planets />
+					</Route>
 
-				<div className="my-5">
-					{ page === 'planets' ? (<Planets />) : (<Vehicles />) }
-				</div>
+				</Routes>
 			</div>
 			<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
 		</ReactQueryConfigProvider>
