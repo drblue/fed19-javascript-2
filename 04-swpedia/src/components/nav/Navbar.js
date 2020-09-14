@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { ThemeContext } from '../../contexts/ThemeContextProvider';
 
 const Navbar = () => {
+	const { isLightTheme, toggleTheme } = useContext(ThemeContext);
+
 	return (
 		<nav className="navbar navbar-expand navbar-dark bg-dark">
 			<div className="container">
@@ -26,6 +29,9 @@ const Navbar = () => {
 						</li>
 						<li className="nav-item">
 							<NavLink to={`/vehicles`} className="nav-link">Vehicles</NavLink>
+						</li>
+						<li className="nav-item">
+							<a href="#" onClick={() => toggleTheme()} className="nav-link">Toggle Theme</a>
 						</li>
 					</ul>
 				</div>

@@ -12,44 +12,47 @@ import Navbar from './components/nav/Navbar';
 import NotFound from './components/NotFound';
 import People from './components/people/People';
 import PersonDetails from './components/people/PersonDetails';
+import ThemeContextProvider from './contexts/ThemeContextProvider';
 
 function App() {
 	return (
 		<ReactQueryConfigProvider config={config.reactQueryConfig}>
-			<Navbar />
+			<ThemeContextProvider>
+				<Navbar />
 
-			<div id="App" className="container py-3">
-				<GlobalFetchingSpinner />
-				<Routes>
+				<div id="App" className="container py-3">
+					<GlobalFetchingSpinner />
+					<Routes>
 
-					<Route path="/">
-						<Home />
-					</Route>
-
-					<Route path="/films">
 						<Route path="/">
-							<Films />
+							<Home />
 						</Route>
 
-						<Route path="/:filmId">
-							<FilmDetails />
-						</Route>
-					</Route>
+						<Route path="/films">
+							<Route path="/">
+								<Films />
+							</Route>
 
-					<Route path="/people">
-						<Route path="/">
-							<People />
+							<Route path="/:filmId">
+								<FilmDetails />
+							</Route>
 						</Route>
 
-						<Route path="/:personId">
-							<PersonDetails />
-						</Route>
-					</Route>
+						<Route path="/people">
+							<Route path="/">
+								<People />
+							</Route>
 
-					<Route path="*" element={<NotFound />} />
-				</Routes>
-			</div>
-			<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+							<Route path="/:personId">
+								<PersonDetails />
+							</Route>
+						</Route>
+
+						<Route path="*" element={<NotFound />} />
+					</Routes>
+				</div>
+				<ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+			</ThemeContextProvider>
 		</ReactQueryConfigProvider>
 	);
 }
