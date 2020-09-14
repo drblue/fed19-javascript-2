@@ -13,6 +13,16 @@ html, body, #root, #theme-light, #theme-dark {
 #theme-dark {
 	background-color: $gray-900;
 	color: $gray-100;
+
+	.card {
+		@extend .bg-dark;
+		@extend .text-white;
+
+		.list-group-item {
+			@extend .bg-dark;
+			@extend .text-white;
+		}
+	}
 }
 
 #App {
