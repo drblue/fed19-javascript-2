@@ -17,7 +17,8 @@
     "react-router": "^6.0.0-beta.0",
     "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "3.4.3",
-    "react-spinners": "^0.9.0"
+    "react-spinners": "^0.9.0",
+    "use-url-search-params": "^2.3.13"
   },
   "scripts": {
     "start": "react-scripts start",
