@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
 
 const Navbar = () => {
-	const { isLightTheme, toggleTheme } = useContext(ThemeContext);
+	const { isThemeLight, toggleTheme } = useContext(ThemeContext);
 
 	return (
 		<nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -31,7 +33,13 @@ const Navbar = () => {
 							<NavLink to={`/vehicles`} className="nav-link">Vehicles</NavLink>
 						</li>
 						<li className="nav-item">
-							<a href="#" onClick={() => toggleTheme()} className="nav-link">Toggle Theme</a>
+							<a href="#" onClick={() => toggleTheme()} className="nav-link">
+								{
+									isThemeLight()
+										? (<FontAwesomeIcon icon={faMoon} />)
+										: (<FontAwesomeIcon icon={faSun} />)
+								}
+							</a>
 						</li>
 					</ul>
 				</div>
