@@ -5,6 +5,8 @@ import { Routes, Route } from 'react-router-dom';
 import './App.scss';
 import config from './config';
 import GlobalFetchingSpinner from './components/partials/GlobalFetchingSpinner';
+import Films from './components/films/Films';
+import FilmDetails from './components/films/FilmDetails';
 import Home from './components/Home';
 import Navbar from './components/nav/Navbar';
 import NotFound from './components/NotFound';
@@ -22,6 +24,16 @@ function App() {
 
 					<Route path="/">
 						<Home />
+					</Route>
+
+					<Route path="/films">
+						<Route path="/">
+							<Films />
+						</Route>
+
+						<Route path="/:filmId">
+							<FilmDetails />
+						</Route>
 					</Route>
 
 					<Route path="/people">

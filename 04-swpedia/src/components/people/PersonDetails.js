@@ -78,6 +78,20 @@ const PersonDetails = () => {
 							})}
 						</ul>
 					</dd>
+
+					<dt className="col-sm-3">Starships</dt>
+					<dd className="col-sm-9">
+						<ul className="list-group">
+							{data.starships.map(url => {
+								const id = getIdFromUrl(url);
+								return (
+									<li className="list-group-item" key={id}>
+										<Link to={`/starships/${id}`}>Starship {id} &raquo;</Link>
+									</li>
+								)
+							})}
+						</ul>
+					</dd>
 				</dl>
 
 				<button onClick={() => navigate(-1)} className="btn btn-secondary">&laquo; Back</button>
