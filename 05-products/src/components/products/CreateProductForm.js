@@ -38,11 +38,14 @@ const CreateProductForm = () => {
 		// trigger mutation
 		console.log("triggering mutation");
 		addProduct(product, {
-			onSuccess: () => {
-				console.log("Oh the happy days, our mutation became a Teenage Mutant Ninja Turtle!");
+			onSuccess: (data) => {
+				console.log("Oh the happy days, adding product was a success!", data);
 
 				// invalidate any existing 'products' query
-				queryCache.invalidateQueries('products');
+				setTimeout(() => {
+					console.log("Invalidating 'products' query cache");
+					queryCache.invalidateQueries('products');
+				}, 2500);
 
 				// empty form
 				setProduct(initialProduct);
