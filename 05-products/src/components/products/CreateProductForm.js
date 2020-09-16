@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryCache } from 'react-query';
 import { createProduct } from '../../services/ShopAPI';
 
 const initialProduct = {
@@ -13,6 +13,9 @@ const initialProduct = {
 const CreateProductForm = () => {
 	// set up mutation
 	const [addProduct] = useMutation(createProduct);
+
+	// get QueryCache from context
+	const queryCache = useQueryCache();
 
 	// set up state
 	const [product, setProduct] = useState(initialProduct);
@@ -37,6 +40,11 @@ const CreateProductForm = () => {
 		addProduct(product, {
 			onSuccess: () => {
 				console.log("Oh the happy days, our mutation became a Teenage Mutant Ninja Turtle!");
+
+				// invalidate any existing 'products' query
+				queryCache.invalidateQueries('products');
+
+				// empty form
 				setProduct(initialProduct);
 			},
 		});
