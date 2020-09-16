@@ -1,7 +1,21 @@
 import React, { useState } from 'react';
+import { useMutation } from 'react-query';
+import { createProduct } from '../../services/ShopAPI';
+
+const initialProduct = {
+	name: null,
+	price: null,
+	description: null,
+	SKU: null,
+	EAN: null,
+}
 
 const CreateProductForm = () => {
-	const [product, setProduct] = useState({});
+	// set up mutation
+	const [mutate] = useMutation(createProduct);
+
+	// set up state
+	const [product, setProduct] = useState(initialProduct);
 
 	const handleInputChange = (e) => {
 		setProduct({
@@ -12,7 +26,17 @@ const CreateProductForm = () => {
 
 	const handleFormSubmit = (e) => {
 		e.preventDefault();
-		console.log("Form submitting...");
+
+		if (!product.name || !product.name.length > 2) {
+			console.log("thanks but no");
+			return;
+		}
+
+		// trigger mutation
+		console.log("triggering mutation");
+		mutate(product);
+
+		// (and handle lifecycle of mutation)
 	}
 
 	return (

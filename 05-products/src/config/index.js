@@ -1,7 +1,7 @@
 export default {
 	reactQueryConfig: {
 		queries: {
-			staleTime: 10 * 1000,
+			staleTime: 30 * 1000,
 			refetchOnWindowFocus: false,
 		}
 	}
