@@ -33,13 +33,13 @@ const Navbar = () => {
 							<NavLink to={`/vehicles?page=1`} className="nav-link">Vehicles</NavLink>
 						</li>
 						<li className="nav-item">
-							<a href="#" onClick={() => toggleTheme()} className="nav-link">
+							<button onClick={() => toggleTheme()} className="nav-link btn-change-theme" aria-label="Change color-theme of site">
 								{
 									isThemeLight()
 										? (<FontAwesomeIcon icon={faMoon} />)
 										: (<FontAwesomeIcon icon={faSun} />)
 								}
-							</a>
+							</button>
 						</li>
 					</ul>
 				</div>
