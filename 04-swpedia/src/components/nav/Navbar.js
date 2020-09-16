@@ -15,22 +15,22 @@ const Navbar = () => {
 				<div className="navbar-collapse">
 					<ul className="navbar-nav ml-auto">
 						<li className="nav-item">
-							<NavLink to={`/films`} className="nav-link">Films</NavLink>
+							<NavLink to={`/films?page=1`} className="nav-link">Films</NavLink>
 						</li>
 						<li className="nav-item">
-							<NavLink to={`/people`} className="nav-link">People</NavLink>
+							<NavLink to={`/people?page=1`} className="nav-link">People</NavLink>
 						</li>
 						<li className="nav-item">
-							<NavLink to={`/planets`} className="nav-link">Planets</NavLink>
+							<NavLink to={`/planets?page=1`} className="nav-link">Planets</NavLink>
 						</li>
 						<li className="nav-item">
-							<NavLink to={`/starships`} className="nav-link">Starships</NavLink>
+							<NavLink to={`/starships?page=1`} className="nav-link">Starships</NavLink>
 						</li>
 						<li className="nav-item">
-							<NavLink to={`/species`} className="nav-link">Species</NavLink>
+							<NavLink to={`/species?page=1`} className="nav-link">Species</NavLink>
 						</li>
 						<li className="nav-item">
-							<NavLink to={`/vehicles`} className="nav-link">Vehicles</NavLink>
+							<NavLink to={`/vehicles?page=1`} className="nav-link">Vehicles</NavLink>
 						</li>
 						<li className="nav-item">
 							<a href="#" onClick={() => toggleTheme()} className="nav-link">
