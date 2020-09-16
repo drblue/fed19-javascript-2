@@ -1,0 +1,36 @@
+import React, { useContext } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { ThemeContext } from '../../contexts/ThemeContextProvider';
+
+const Navbar = () => {
+	const { isThemeLight, toggleTheme } = useContext(ThemeContext);
+
+	return (
+		<nav className="navbar navbar-expand navbar-dark bg-dark">
+			<div className="container">
+				<Link to={`/`} className="navbar-brand"><span role="img" aria-label="a wrapped candy">🍬</span> GodisKväll</Link>
+
+				<div className="navbar-collapse">
+					<ul className="navbar-nav ml-auto">
+						<li className="nav-item">
+							<NavLink to={`/products/`} className="nav-link">Produkter</NavLink>
+						</li>
+						<li className="nav-item">
+							<button onClick={() => toggleTheme()} className="nav-link btn-change-theme" aria-label="Change color-theme of site">
+								{
+									isThemeLight()
+										? (<FontAwesomeIcon icon={faMoon} />)
+										: (<FontAwesomeIcon icon={faSun} />)
+								}
+							</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	);
+}
+
+export default Navbar;
