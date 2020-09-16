@@ -41,11 +41,14 @@ const CreateProductForm = () => {
 			onSuccess: (data) => {
 				console.log("Oh the happy days, adding product was a success!", data);
 
-				// invalidate any existing 'products' query
-				setTimeout(() => {
-					console.log("Invalidating 'products' query cache");
-					queryCache.invalidateQueries('products');
-				}, 2500);
+				// update querycache with the newly craeted product
+				queryCache.setQueryData('products', (existingData) => {
+					console.log("Setting new querydata in querycache for query 'products'...");
+					return [
+						...existingData,
+						data
+					];
+				});
 
 				// empty form
 				setProduct(initialProduct);
