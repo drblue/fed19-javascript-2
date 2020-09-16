@@ -3,16 +3,16 @@ import { useMutation } from 'react-query';
 import { createProduct } from '../../services/ShopAPI';
 
 const initialProduct = {
-	name: null,
-	price: null,
-	description: null,
-	SKU: null,
-	EAN: null,
+	name: "",
+	price: "",
+	description: "",
+	SKU: "",
+	EAN: "",
 }
 
 const CreateProductForm = () => {
 	// set up mutation
-	const [mutate] = useMutation(createProduct);
+	const [addProduct] = useMutation(createProduct);
 
 	// set up state
 	const [product, setProduct] = useState(initialProduct);
@@ -34,7 +34,12 @@ const CreateProductForm = () => {
 
 		// trigger mutation
 		console.log("triggering mutation");
-		mutate(product);
+		addProduct(product, {
+			onSuccess: () => {
+				console.log("Oh the happy days, our mutation became a Teenage Mutant Ninja Turtle!");
+				setProduct(initialProduct);
+			},
+		});
 
 		// (and handle lifecycle of mutation)
 	}
@@ -49,6 +54,7 @@ const CreateProductForm = () => {
 						type="text"
 						id="name"
 						onChange={handleInputChange}
+						value={product.name}
 						className="form-control"
 						placeholder="Enter the product name" />
 				</div>
@@ -59,6 +65,7 @@ const CreateProductForm = () => {
 						type="text"
 						id="price"
 						onChange={handleInputChange}
+						value={product.price}
 						className="form-control" placeholder="" />
 				</div>
 
@@ -68,6 +75,7 @@ const CreateProductForm = () => {
 						id="description"
 						rows="10"
 						onChange={handleInputChange}
+						value={product.description}
 						className="form-control"></textarea>
 				</div>
 
@@ -77,6 +85,7 @@ const CreateProductForm = () => {
 						type="text"
 						id="SKU"
 						onChange={handleInputChange}
+						value={product.SKU}
 						className="form-control"
 						placeholder="" />
 				</div>
@@ -87,6 +96,7 @@ const CreateProductForm = () => {
 						type="text"
 						id="EAN"
 						onChange={handleInputChange}
+						value={product.EAN}
 						className="form-control"
 						placeholder="" />
 				</div>
