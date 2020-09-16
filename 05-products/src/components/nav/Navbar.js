@@ -10,7 +10,7 @@ const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand navbar-dark bg-dark">
 			<div className="container">
-				<Link to={`/`} className="navbar-brand"><span role="img" aria-label="a wrapped candy">🍬</span> GodisKväll</Link>
+				<Link to={`/`} className="navbar-brand"><span role="img" aria-label="a chocolate bar">🍫</span> GodisKväll</Link>
 
 				<div className="navbar-collapse">
 					<ul className="navbar-nav ml-auto">
