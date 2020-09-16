@@ -42,13 +42,7 @@ const CreateProductForm = () => {
 				console.log("Oh the happy days, adding product was a success!", data);
 
 				// update querycache with the newly craeted product
-				queryCache.setQueryData('products', (existingData) => {
-					console.log("Setting new querydata in querycache for query 'products'...");
-					return [
-						...existingData,
-						data
-					];
-				});
+				queryCache.setQueryData('products', (existingData) => [...existingData, data]);
 
 				// empty form
 				setProduct(initialProduct);
