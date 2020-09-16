@@ -1,12 +1,12 @@
 import React from 'react';
-import { usePaginatedQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import MoonLoader from 'react-spinners/MoonLoader';
 import { getProducts } from '../../services/ShopAPI';
 import Product from './Product';
 
 const Products = () => {
 
-	const { resolvedData, latestData, isLoading, error } = usePaginatedQuery(['products'], getProducts);
+	const { data, isLoading, error } = useQuery(['products'], getProducts);
 
 	if (isLoading) {
 		return (
@@ -27,10 +27,10 @@ const Products = () => {
 		<>
 			<h2>Products</h2>
 
-			<p>There are {resolvedData.count} products in the database.</p>
+			<p>There are {data.count} products in the database.</p>
 
 			<div className="row">
-				{resolvedData.results.map((product, index) => (
+				{data.map((product, index) => (
 					<div className="col-lg-3 col-md-4 col-sm-6" key={index}>
 						<Product product={product} />
 					</div>
