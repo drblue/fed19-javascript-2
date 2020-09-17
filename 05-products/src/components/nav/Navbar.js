@@ -23,6 +23,13 @@ const Navbar = () => {
 								{data && data.length ? `${data.length} produkter` : `Produkter`}
 							</NavLink>
 						</li>
+
+						<li className="nav-item">
+							{ isAuthenticated() && (
+								<NavLink to={`/products/create`} className="nav-link">Ny produkt</NavLink>
+							)}
+						</li>
+
 						<li className="nav-item">
 							{ isAuthenticated() ? (
 								<NavLink to={`/logout/`} className="nav-link">Logout</NavLink>
@@ -30,6 +37,7 @@ const Navbar = () => {
 								<NavLink to={`/login/`} className="nav-link">Login</NavLink>
 							)}
 						</li>
+
 						<li className="nav-item">
 							<button onClick={() => toggleTheme()} className="nav-link btn-change-theme" aria-label="Change color-theme of site">
 								{

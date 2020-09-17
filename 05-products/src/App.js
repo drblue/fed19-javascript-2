@@ -10,6 +10,7 @@ import Login from './components/auth/Login';
 import Logout from './components/auth/Logout';
 import Navbar from './components/nav/Navbar';
 import NotFound from './components/NotFound';
+import CreateProductForm from './components/products/CreateProductForm';
 import Products from './components/products/Products';
 import ProductDetails from './components/products/ProductDetails';
 import AuthContextProvider from './contexts/AuthContextProvider';
@@ -41,6 +42,10 @@ function App() {
 							<Route path="/products">
 								<Route path="/">
 									<Products />
+								</Route>
+
+								<Route path="/create">
+									<CreateProductForm />
 								</Route>
 
 								<Route path="/:productId">
