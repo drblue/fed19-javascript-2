@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import MoonLoader from 'react-spinners/MoonLoader';
+import useAuth from '../../hooks/useAuth';
 import useProducts from '../../hooks/useProducts';
 import CreateProductForm from './CreateProductForm';
 import Product from './Product';
 
 const Products = () => {
+	const { isAuthenticated } = useAuth();
 
 	const [showCreateProductForm, setShowCreateProductForm] = useState(false);
 	// const { data, isLoading, error } = useProducts();
@@ -40,13 +42,15 @@ const Products = () => {
 			</div>
 
 			{
-				showCreateProductForm
-				? (
-					<CreateProductForm />
-				) : (
-					<div className="d-flex justify-content-end">
-						<button className="btn btn-primary btn-lg" onClick={() => setShowCreateProductForm(true)}>+</button>
-					</div>
+				isAuthenticated && (
+					showCreateProductForm
+					? (
+						<CreateProductForm />
+					) : (
+						<div className="d-flex justify-content-end">
+							<button className="btn btn-primary btn-lg" onClick={() => setShowCreateProductForm(true)}>+</button>
+						</div>
+					)
 				)
 			}
 		</>

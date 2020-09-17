@@ -3,10 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
+import useAuth from '../../hooks/useAuth';
 import useProducts from '../../hooks/useProducts';
 
 const Navbar = () => {
 	const { isThemeLight, toggleTheme } = useContext(ThemeContext);
+	const { isAuthenticated } = useAuth();
 	const { data } = useProducts();
 
 	return (
@@ -20,6 +22,13 @@ const Navbar = () => {
 							<NavLink to={`/products/`} className="nav-link">
 								{data && data.length ? `${data.length} produkter` : `Produkter`}
 							</NavLink>
+						</li>
+						<li className="nav-item">
+							{ isAuthenticated ? (
+								<NavLink to={`/logout/`} className="nav-link">Logout</NavLink>
+							) : (
+								<NavLink to={`/login/`} className="nav-link">Login</NavLink>
+							)}
 						</li>
 						<li className="nav-item">
 							<button onClick={() => toggleTheme()} className="nav-link btn-change-theme" aria-label="Change color-theme of site">
