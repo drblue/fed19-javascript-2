@@ -6,7 +6,7 @@ const AuthRoute = (props) => {
 	const { isAuthenticated } = useAuth();
 
 	if (!isAuthenticated()) {
-		return (<Navigate to="/login" />);
+		return (<Navigate to="/login" state={{ accessDenied: true }} />);
 	}
 
 	return (

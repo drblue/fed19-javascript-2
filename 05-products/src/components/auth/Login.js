@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 const initialState = {
@@ -8,9 +8,12 @@ const initialState = {
 }
 
 const Login = () => {
+	const location = useLocation();
 	const navigate = useNavigate();
 	const [input, setInput] = useState(initialState)
 	const { isAuthenticated, login, logout, error } = useAuth();
+
+	console.log("Location:", location);
 
 	const handleInputChange = (e) => {
 		setInput({
@@ -34,6 +37,12 @@ const Login = () => {
 			{error && (
 				<div className="alert alert-warning">
 					{error}
+				</div>
+			)}
+
+			{location.state && location.state.accessDenied && (
+				<div className="alert alert-info">
+					Access denied! You need to login first!
 				</div>
 			)}
 
