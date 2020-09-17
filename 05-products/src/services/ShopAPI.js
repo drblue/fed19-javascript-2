@@ -26,6 +26,22 @@ const post = async (endpoint, data) => {
 
 /**
  *
+ * (Bogus) Authentication
+ *
+ */
+
+export const login = async (username, password) => {
+	return (username === "jn" && password === "apa")
+		? {
+			"id": 1,
+			"username": "jn",
+			"email": "jn@thehiveresistance.com",
+			"roles": ["superuser"],
+		} : false;
+}
+
+/**
+ *
  * Products
  *
  */

@@ -24,7 +24,7 @@ const Navbar = () => {
 							</NavLink>
 						</li>
 						<li className="nav-item">
-							{ isAuthenticated ? (
+							{ isAuthenticated() ? (
 								<NavLink to={`/logout/`} className="nav-link">Logout</NavLink>
 							) : (
 								<NavLink to={`/login/`} className="nav-link">Login</NavLink>

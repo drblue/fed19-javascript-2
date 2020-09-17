@@ -42,7 +42,7 @@ const Products = () => {
 			</div>
 
 			{
-				isAuthenticated && (
+				isAuthenticated() && (
 					showCreateProductForm
 					? (
 						<CreateProductForm />
