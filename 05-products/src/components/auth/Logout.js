@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 const Logout = () => {
+	const navigate = useNavigate();
 	const { logout } = useAuth();
 
 	return (
@@ -11,7 +13,10 @@ const Logout = () => {
 			<div className="alert alert-warning">
 				<p>Are you really sure you want to logout?</p>
 
-				<button onClick={logout} className="btn btn-danger btn-lg">Yes, log me out!</button>
+				<button onClick={() => {
+					logout();
+					navigate('/');
+				}} className="btn btn-danger btn-lg">Yes, log me out!</button>
 			</div>
 		</>
 	);
