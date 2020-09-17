@@ -3,9 +3,11 @@ import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { ThemeContext } from '../../contexts/ThemeContextProvider';
+import useProducts from '../../hooks/useProducts';
 
 const Navbar = () => {
 	const { isThemeLight, toggleTheme } = useContext(ThemeContext);
+	const { data } = useProducts();
 
 	return (
 		<nav className="navbar navbar-expand navbar-dark bg-dark">
@@ -15,7 +17,9 @@ const Navbar = () => {
 				<div className="navbar-collapse">
 					<ul className="navbar-nav ml-auto">
 						<li className="nav-item">
-							<NavLink to={`/products/`} className="nav-link">Produkter</NavLink>
+							<NavLink to={`/products/`} className="nav-link">
+								{data && data.length ? `${data.length} produkter` : `Produkter`}
+							</NavLink>
 						</li>
 						<li className="nav-item">
 							<button onClick={() => toggleTheme()} className="nav-link btn-change-theme" aria-label="Change color-theme of site">
