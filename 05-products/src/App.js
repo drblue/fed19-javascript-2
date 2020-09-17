@@ -15,6 +15,7 @@ import Products from './components/products/Products';
 import ProductDetails from './components/products/ProductDetails';
 import AuthContextProvider from './contexts/AuthContextProvider';
 import ThemeContextProvider from './contexts/ThemeContextProvider';
+import AuthRoute from './decorators/AuthRoute';
 
 function App() {
 	return (
@@ -44,9 +45,9 @@ function App() {
 									<Products />
 								</Route>
 
-								<Route path="/create">
+								<AuthRoute path="/create">
 									<CreateProductForm />
-								</Route>
+								</AuthRoute>
 
 								<Route path="/:productId">
 									<ProductDetails />
