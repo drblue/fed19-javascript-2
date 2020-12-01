@@ -89,15 +89,17 @@ function App() {
 				</div>
 
 				{
-					alertMsg && (<Alert variant={alertMsg.type}>{alertMsg.msg}</Alert>)
+					alertMsg && (<Alert variant={alertMsg.type} className="my-3">{alertMsg.msg}</Alert>)
 				}
 
 				{
 					uploadedImageUrl && (<img src={uploadedImageUrl} className="img-fluid my-3" alt="uploaded file" />)
 				}
 
-				<Button variant="primary" type="submit">Upload</Button>
-				<Button variant="secondary" type="reset">Clear</Button>
+				<div>
+					<Button variant="primary" type="submit">Upload</Button>
+					<Button variant="secondary" type="reset">Clear</Button>
+				</div>
 			</Form>
 		</Container>
 	);
