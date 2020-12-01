@@ -4,6 +4,7 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import './App.scss';
 
 function App() {
@@ -30,14 +31,14 @@ function App() {
 		const storageRef = storage.ref();
 
 		// create a reference based on the file's name
-		const fileRef = storageRef.child(image.name);
+		const fileRef = storageRef.child(`images/${image.name}`);
 
 		// put (upload) image to fileRef
-		const uploadTask = fileRef.put(image);
+		const uploadTask = fileRef.put(image, { uploadedBy: 1 });
 
 		// attach listener for `state_changed`-event
 		uploadTask.on('state_changed', taskSnapshot => {
-			setUploadProgress((taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100);
+			setUploadProgress(Math.round((taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100));
 			// console.log(`Transfered ${taskSnapshot.bytesTransferred} bytes out of ${taskSnapshot.totalBytes} which is ${progress} %.`);
 		});
 
@@ -90,7 +91,7 @@ function App() {
 					/>
 				</Form.Group>
 
-				<div className="mb-3">
+				<div className="mb-2">
 					{
 						image
 							? `${image.name} (${Math.round(image.size/1024)} kb)`
@@ -98,7 +99,11 @@ function App() {
 					}
 				</div>
 
-				{uploadProgress && (<p>{Math.round(uploadProgress)}%</p>)}
+				{
+					uploadProgress !== null && (
+						<ProgressBar animated variant="success" now={uploadProgress} className="mb-3" />
+					)
+				}
 
 				{
 					alertMsg && (<Alert variant={alertMsg.type} className="my-3">{alertMsg.msg}</Alert>)
