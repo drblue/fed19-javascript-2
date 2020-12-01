@@ -10,6 +10,7 @@ function App() {
 	const [image, setImage] = useState(null);
 	const [alertMsg, setAlertMsg] = useState(null);
 	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
+	const [uploadProgress, setUploadProgress] = useState(null);
 
 	const handleFileChange = e => {
 		if (e.target.files[0]) {
@@ -33,6 +34,12 @@ function App() {
 
 		// put (upload) image to fileRef
 		const uploadTask = fileRef.put(image);
+
+		// attach listener for `state_changed`-event
+		uploadTask.on('state_changed', taskSnapshot => {
+			setUploadProgress((taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100);
+			// console.log(`Transfered ${taskSnapshot.bytesTransferred} bytes out of ${taskSnapshot.totalBytes} which is ${progress} %.`);
+		});
 
 		// are we there yet?
 		uploadTask.then(snapshot => {
@@ -87,6 +94,8 @@ function App() {
 							: "No image selected."
 					}
 				</div>
+
+				{uploadProgress && (<p>{Math.round(uploadProgress)}%</p>)}
 
 				{
 					alertMsg && (<Alert variant={alertMsg.type} className="my-3">{alertMsg.msg}</Alert>)
