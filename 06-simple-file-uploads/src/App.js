@@ -69,6 +69,9 @@ function App() {
 
 	const handleReset = e => {
 		setImage(null);
+		setAlertMsg(null);
+		setUploadProgress(null);
+		setUploadedImageUrl(null);
 	}
 
 	return (
