@@ -1,29 +1,49 @@
-import React, { useState } from 'react';
-import { storage } from './firebase';
+import React, { useEffect, useState } from 'react';
+import { db, storage } from './firebase';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import './App.scss';
 
 function App() {
-	const [image, setImage] = useState(null);
+	const [file, setFile] = useState(null);
+	const [images, setImages] = useState([]);
 	const [alertMsg, setAlertMsg] = useState(null);
-	const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
 	const [uploadProgress, setUploadProgress] = useState(null);
+
+	useEffect(() => {
+		getImages();
+	}, []);
+
+	const getImages = async () => {
+		const imgs = [];
+
+		const snapshot = await db.collection('images').get();
+		snapshot.forEach(doc => {
+			imgs.push({
+				id: doc.id,
+				...doc.data(),
+			});
+		});
+
+		setImages(imgs);
+	}
 
 	const handleFileChange = e => {
 		if (e.target.files[0]) {
-			setImage(e.target.files[0]);
+			setFile(e.target.files[0]);
 		}
-		console.log("File changed!", e.target.files);
 	}
 
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		if (!image) {
+		if (!file) {
 			return;
 		}
 
@@ -31,21 +51,18 @@ function App() {
 		const storageRef = storage.ref();
 
 		// create a reference based on the file's name
-		const fileRef = storageRef.child(`images/${image.name}`);
+		const fileRef = storageRef.child(`images/${file.name}`);
 
-		// put (upload) image to fileRef
-		const uploadTask = fileRef.put(image, { uploadedBy: 1 });
+		// put (upload) file to fileRef
+		const uploadTask = fileRef.put(file);
 
 		// attach listener for `state_changed`-event
 		uploadTask.on('state_changed', taskSnapshot => {
 			setUploadProgress(Math.round((taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100));
-			// console.log(`Transfered ${taskSnapshot.bytesTransferred} bytes out of ${taskSnapshot.totalBytes} which is ${progress} %.`);
 		});
 
 		// are we there yet?
 		uploadTask.then(snapshot => {
-			console.log("File has been uploaded!", snapshot);
-
 			// let user know we're done
 			setAlertMsg({
 				type: "success",
@@ -54,9 +71,18 @@ function App() {
 
 			// retrieve URL to uploaded file
 			snapshot.ref.getDownloadURL().then(url => {
-				setUploadedImageUrl(url);
+				// add uploaded file to db
+				db.collection('images').add({
+					name: file.name,
+					path: snapshot.ref.fullPath,
+					size: file.size,
+					type: file.type,
+					url,
+				}).then(() => {
+					// file has been added to db, refresh list of files
+					getImages();
+				});
 			});
-
 		}).catch(error => {
 			console.error("File upload triggered an error!", error);
 			setAlertMsg({
@@ -64,15 +90,12 @@ function App() {
 				msg: `Image could not be uploaded due to an error (${error.code})`
 			});
 		});
-
-		console.log("uploadTask:", uploadTask);
 	}
 
 	const handleReset = e => {
-		setImage(null);
+		setFile(null);
 		setAlertMsg(null);
 		setUploadProgress(null);
-		setUploadedImageUrl(null);
 	}
 
 	return (
@@ -81,7 +104,27 @@ function App() {
 				<h1>Simple File Uploads</h1>
 			</header>
 
+			<Row className="mb-5">
+				{
+					images.map(image => (
+						<Col sm={6} md={4} lg={3} key={image.id}>
+							<Card className="mb-3">
+								<Card.Img variant="top" src={image.url} />
+								<Card.Body>
+									<Card.Text>
+										{image.name} ({Math.round(image.size/1024)} kb)
+									</Card.Text>
+								</Card.Body>
+							</Card>
+						</Col>
+					))
+				}
+			</Row>
+
+
 			<Form onSubmit={handleSubmit} onReset={handleReset}>
+				<h2>Upload a new image</h2>
+
 				<Form.Group>
 					<Form.File
 						id="upload-image"
@@ -93,8 +136,8 @@ function App() {
 
 				<div className="mb-2">
 					{
-						image
-							? `${image.name} (${Math.round(image.size/1024)} kb)`
+						file
+							? `${file.name} (${Math.round(file.size/1024)} kb)`
 							: "No image selected."
 					}
 				</div>
@@ -107,10 +150,6 @@ function App() {
 
 				{
 					alertMsg && (<Alert variant={alertMsg.type} className="my-3">{alertMsg.msg}</Alert>)
-				}
-
-				{
-					uploadedImageUrl && (<img src={uploadedImageUrl} className="img-fluid my-3" alt="uploaded file" />)
 				}
 
 				<div>
