@@ -2,13 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { db, storage } from './firebase';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import './App.scss';
+import CardImage from './components/CardImage';
 
 const allowedFiletypes = ['image/gif', 'image/jpeg', 'image/png'];
 const maxFileSize = 5;
@@ -83,6 +82,8 @@ function App() {
 				type: "success",
 				msg: "Image successfully uploaded",
 			});
+			setFile(null);
+			setUploadProgress(null);
 
 			// retrieve URL to uploaded file
 			snapshot.ref.getDownloadURL().then(url => {
@@ -122,16 +123,7 @@ function App() {
 			<Row className="mb-5">
 				{
 					images.map(image => (
-						<Col sm={6} md={4} lg={3} key={image.id}>
-							<Card className="mb-3">
-								<Card.Img variant="top" src={image.url} />
-								<Card.Body>
-									<Card.Text>
-										{image.name} ({Math.round(image.size/1024)} kb)
-									</Card.Text>
-								</Card.Body>
-							</Card>
-						</Col>
+						<CardImage image={image} key={image.id} />
 					))
 				}
 			</Row>
