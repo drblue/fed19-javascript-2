@@ -25,17 +25,25 @@ function App() {
 	}, []);
 
 	const getImages = async () => {
-		const imgs = [];
+		// empty our current list of images as we're refreshing
+		setImages([]);
 
-		const snapshot = await db.collection('images').get();
-		snapshot.forEach(doc => {
-			imgs.push({
-				id: doc.id,
-				...doc.data(),
-			});
+		// get list of files
+		const res = await storage.ref().listAll();
+
+		// loop over each file and retrieve its URL
+		// and append it to our images-array.
+		res.items.forEach(async item => {
+			const url = await item.getDownloadURL();
+			setImages(prevImages => [
+				...prevImages,
+				{
+					id: item.name,
+					name: item.name,
+					url,
+				}
+			]);
 		});
-
-		setImages(imgs);
 	}
 
 	const handleFileChange = e => {
