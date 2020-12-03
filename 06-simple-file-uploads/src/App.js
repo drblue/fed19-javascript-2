@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import './App.scss';
 import CardImage from './components/CardImage';
+import useUploadImage from './hooks/useUploadImage';
 
 const allowedFiletypes = ['image/gif', 'image/jpeg', 'image/png'];
 const maxFileSize = 5;
@@ -15,9 +16,10 @@ const maxFileSizeInBytes = maxFileSize * 1024 * 1024;
 
 function App() {
 	const [file, setFile] = useState(null);
+	const [uploadFile, setUploadFile] = useState(null);
 	const [images, setImages] = useState([]);
 	const [alertMsg, setAlertMsg] = useState(null);
-	const [uploadProgress, setUploadProgress] = useState(null);
+	const { uploadProgress, uploadedImage, status } = useUploadImage(file);
 
 	useEffect(() => {
 		getImages();
@@ -61,57 +63,12 @@ function App() {
 			return;
 		}
 
-		// get root reference
-		const storageRef = storage.ref();
-
-		// create a reference based on the file's name
-		const fileRef = storageRef.child(`images/${file.name}`);
-
-		// put (upload) file to fileRef
-		const uploadTask = fileRef.put(file);
-
-		// attach listener for `state_changed`-event
-		uploadTask.on('state_changed', taskSnapshot => {
-			setUploadProgress(Math.round((taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100));
-		});
-
-		// are we there yet?
-		uploadTask.then(snapshot => {
-			// let user know we're done
-			setAlertMsg({
-				type: "success",
-				msg: "Image successfully uploaded",
-			});
-			setFile(null);
-			setUploadProgress(null);
-
-			// retrieve URL to uploaded file
-			snapshot.ref.getDownloadURL().then(url => {
-				// add uploaded file to db
-				db.collection('images').add({
-					name: file.name,
-					path: snapshot.ref.fullPath,
-					size: file.size,
-					type: file.type,
-					url,
-				}).then(() => {
-					// file has been added to db, refresh list of files
-					getImages();
-				});
-			});
-		}).catch(error => {
-			console.error("File upload triggered an error!", error);
-			setAlertMsg({
-				type: "warning",
-				msg: `Image could not be uploaded due to an error (${error.code})`
-			});
-		});
+		setUploadFile(file);
 	}
 
 	const handleReset = e => {
 		setFile(null);
-		setAlertMsg(null);
-		setUploadProgress(null);
+		setUploadFile(null);
 	}
 
 	return (
