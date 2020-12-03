@@ -8,6 +8,7 @@ import Row from 'react-bootstrap/Row';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import './App.scss';
 import CardImage from './components/CardImage';
+import useImages from './hooks/useImages';
 import useUploadImage from './hooks/useUploadImage';
 
 const allowedFiletypes = ['image/gif', 'image/jpeg', 'image/png'];
@@ -17,19 +18,19 @@ const maxFileSizeInBytes = maxFileSize * 1024 * 1024;
 function App() {
 	const [file, setFile] = useState(null);
 	const [uploadFile, setUploadFile] = useState(null);
-	const [images, setImages] = useState([]);
 	const [alertMsg, setAlertMsg] = useState(null);
+	const { images, getImages } = useImages();
 	const { uploadProgress, uploadedImage, error, isSuccess } = useUploadImage(uploadFile);
 
 	useEffect(() => {
 		getImages();
-	}, []);
+	}, [getImages]);
 
 	useEffect(() => {
 		if (uploadedImage) {
 			getImages();
 		}
-	}, [uploadedImage]);
+	}, [uploadedImage, getImages]);
 
 	useEffect(() => {
 		if (error) {
@@ -41,20 +42,6 @@ function App() {
 			});
 		}
 	}, [isSuccess, error]);
-
-	const getImages = async () => {
-		const imgs = [];
-
-		const snapshot = await db.collection('images').get();
-		snapshot.forEach(doc => {
-			imgs.push({
-				id: doc.id,
-				...doc.data(),
-			});
-		});
-
-		setImages(imgs);
-	}
 
 	const handleFileChange = e => {
 		const selectedFile = e.target.files[0];
@@ -84,6 +71,7 @@ function App() {
 	}
 
 	const handleReset = e => {
+		setAlertMsg(null);
 		setFile(null);
 		setUploadFile(null);
 	}
