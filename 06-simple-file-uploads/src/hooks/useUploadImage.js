@@ -4,20 +4,22 @@ import { db, storage } from '../firebase';
 const useUploadImage = (file) => {
 	const [uploadProgress, setUploadProgress] = useState(null);
 	const [uploadedImage, setUploadedImage] = useState(null);
-	const [status, setStatus] = useState(null);
-	const [isError, setIsError] = useState(false);
+	const [error, setError] = useState(null);
 	const [isSuccess, setIsSuccess] = useState(false);
 
 	useEffect(() => {
 		if (!file) {
 			setUploadProgress(null);
 			setUploadedImage(null);
-			setStatus(null);
-			setIsError(false);
+			setError(null);
 			setIsSuccess(false);
 
 			return;
 		}
+
+		// reset environment
+		setError(null);
+		setIsSuccess(false);
 
 		// get file reference
 		const fileRef = storage.ref(`images/${file.name}`);
@@ -32,13 +34,6 @@ const useUploadImage = (file) => {
 
 		// are we there yet?
 		uploadTask.then(snapshot => {
-			// let user know we're done
-			setStatus({
-				type: "success",
-				msg: "Image successfully uploaded",
-			});
-			setUploadProgress(null);
-
 			// retrieve URL to uploaded file
 			snapshot.ref.getDownloadURL().then(url => {
 				// add uploaded file to db
@@ -51,6 +46,10 @@ const useUploadImage = (file) => {
 				};
 
 				db.collection('images').add(image).then(() => {
+					// let user know we're done
+					setIsSuccess(true);
+					setUploadProgress(null);
+
 					// file has been added to db, refresh list of files
 					setUploadedImage(image);
 					setIsSuccess(true);
@@ -58,15 +57,14 @@ const useUploadImage = (file) => {
 			});
 		}).catch(error => {
 			console.error("File upload triggered an error!", error);
-			setIsError(true);
-			setStatus({
+			setError({
 				type: "warning",
 				msg: `Image could not be uploaded due to an error (${error.code})`
 			});
 		});
 	}, [file]);
 
-	return { uploadProgress, uploadedImage, status, isError, isSuccess };
+	return { uploadProgress, uploadedImage, error, isSuccess };
 }
 
 export default useUploadImage;

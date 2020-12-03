@@ -19,11 +19,28 @@ function App() {
 	const [uploadFile, setUploadFile] = useState(null);
 	const [images, setImages] = useState([]);
 	const [alertMsg, setAlertMsg] = useState(null);
-	const { uploadProgress, uploadedImage, status } = useUploadImage(file);
+	const { uploadProgress, uploadedImage, error, isSuccess } = useUploadImage(uploadFile);
 
 	useEffect(() => {
 		getImages();
 	}, []);
+
+	useEffect(() => {
+		if (uploadedImage) {
+			getImages();
+		}
+	}, [uploadedImage]);
+
+	useEffect(() => {
+		if (error) {
+			setAlertMsg(error);
+		} else if (isSuccess) {
+			setAlertMsg({
+				type: 'success',
+				msg: 'Image succesfully uploaded.',
+			});
+		}
+	}, [isSuccess, error]);
 
 	const getImages = async () => {
 		const imgs = [];
