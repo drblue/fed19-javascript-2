@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { db, storage } from './firebase';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
