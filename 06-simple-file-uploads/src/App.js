@@ -10,6 +10,10 @@ import Row from 'react-bootstrap/Row';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import './App.scss';
 
+const allowedFiletypes = ['image/gif', 'image/jpeg', 'image/png'];
+const maxFileSize = 5;
+const maxFileSizeInBytes = maxFileSize * 1024 * 1024;
+
 function App() {
 	const [file, setFile] = useState(null);
 	const [images, setImages] = useState([]);
@@ -35,8 +39,19 @@ function App() {
 	}
 
 	const handleFileChange = e => {
-		if (e.target.files[0]) {
-			setFile(e.target.files[0]);
+		const selectedFile = e.target.files[0];
+
+		if (selectedFile) {
+			if (allowedFiletypes.includes(selectedFile.type) && selectedFile.size < maxFileSizeInBytes) {
+				setFile(selectedFile);
+				setAlertMsg(null);
+			} else {
+				setAlertMsg({
+					type: 'warning',
+					msg: `Please select a valid file (gif, jpg or png) with a maximum filesize of ${maxFileSize} mb.`,
+				});
+				setFile(null);
+			}
 		}
 	}
 
