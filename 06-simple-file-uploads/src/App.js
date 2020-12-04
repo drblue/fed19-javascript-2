@@ -16,6 +16,12 @@ function App() {
 					<h1>Simple File Uploads</h1>
 				</header>
 
+				<hr />
+
+				<UploadImageDropzone />
+
+				<hr />
+
 				<Row className="mb-5">
 					{
 						images.map(image => (
@@ -23,11 +29,6 @@ function App() {
 						))
 					}
 				</Row>
-
-				<hr />
-
-				<UploadImageDropzone />
-
 			</Container>
 
 			<footer className="bg-dark text-white text-center py-3">
