@@ -20,6 +20,8 @@ const UploadImageDropzone = () => {
 				success: true,
 				text: 'Image successfully uploaded!',
 			});
+			// set file to upload to null to prevent duplicate uploading
+			setUploadFile(null);
 		} else {
 			setMessage(null);
 		}
@@ -45,14 +47,14 @@ const UploadImageDropzone = () => {
 			<input {...getInputProps()} />
 			{
 				isDragActive
-					? isDragAccept ? <p>Drop it! 🔫</p> : <p>We don't want that file! 😨</p>
+					? isDragAccept ? <p>Drop it like it's hot! 🔥🔫</p> : <p>We don't want that file! 😨</p>
 					: <p>Give me some files 😋!</p>
 			}
 			{acceptedFiles && (
 				<div className="accepted-files mt-2">
 					<ul className="list-unstyled">
 						{acceptedFiles.map(file => (
-							<li key={file.name}>{file.name} ({Math.round(file.size / 1024)} kb)</li>
+							<li key={file.name}><small>{file.name} ({Math.round(file.size / 1024)} kb)</small></li>
 						))}
 					</ul>
 				</div>
