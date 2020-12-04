@@ -45,7 +45,10 @@ const useUploadImage = (file) => {
 					url,
 				};
 
-				db.collection('images').add(image).then(() => {
+				db.collection('images').add(image).then((doc) => {
+					// update storage-ref with metadata for our firestore document id
+					fileRef.updateMetadata({ customMetadata: { firestoreId: doc.id }});
+
 					// let user know we're done
 					setIsSuccess(true);
 					setUploadProgress(null);
