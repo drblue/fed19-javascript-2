@@ -18,18 +18,8 @@ function App() {
 	const [file, setFile] = useState(null);
 	const [uploadFile, setUploadFile] = useState(null);
 	const [alertMsg, setAlertMsg] = useState(null);
-	const { images, getImages } = useImages();
-	const { uploadProgress, uploadedImage, error, isSuccess } = useUploadImage(uploadFile);
-
-	useEffect(() => {
-		getImages();
-	}, [getImages]);
-
-	useEffect(() => {
-		if (uploadedImage) {
-			getImages();
-		}
-	}, [uploadedImage, getImages]);
+	const { images } = useImages();
+	const { uploadProgress, error, isSuccess } = useUploadImage(uploadFile);
 
 	useEffect(() => {
 		if (error) {
@@ -88,7 +78,6 @@ function App() {
 					))
 				}
 			</Row>
-
 
 			<Form onSubmit={handleSubmit} onReset={handleReset}>
 				<h2>Upload a new image</h2>

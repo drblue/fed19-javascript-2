@@ -1,13 +1,13 @@
-import { useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 
 const useImages = () => {
 	const [images, setImages] = useState([]);
 
-	const getImages = useCallback(() => {
-		const imgs = [];
+	useEffect(() => {
+		const unsubscribe = db.collection('images').orderBy("name").onSnapshot(snapshot => {
+			const imgs = [];
 
-		db.collection('images').get().then(snapshot => {
 			snapshot.forEach(doc => {
 				imgs.push({
 					id: doc.id,
@@ -17,9 +17,11 @@ const useImages = () => {
 
 			setImages(imgs);
 		});
+
+		return unsubscribe;
 	}, []);
 
-	return { images, getImages };
+	return { images };
 }
 
 export default useImages;
