@@ -1,12 +1,40 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import Alert from 'react-bootstrap/Alert';
+import ProgressBar from 'react-bootstrap/esm/ProgressBar';
 import { useDropzone } from 'react-dropzone';
 import useUploadImage from '../hooks/useUploadImage';
 
 const UploadImageDropzone = () => {
+	const [uploadFile, setUploadFile] = useState(null);
+	const [message, setMessage] = useState(null);
+	const { uploadProgress, error, isSuccess } = useUploadImage(uploadFile);
+
+	useEffect(() => {
+		if (error) {
+			setMessage({
+				error: true,
+				text: error,
+			});
+		} else if (isSuccess) {
+			setMessage({
+				success: true,
+				text: 'Image successfully uploaded!',
+			});
+		} else {
+			setMessage(null);
+		}
+	}, [error, isSuccess]);
 
 	const onDrop = useCallback(acceptedFiles => {
-		console.log("Got me zum files 🗃🥳:", acceptedFiles);
+		setMessage(null);
+
+		if (acceptedFiles.length === 0) {
+			return;
+		}
+
+		setUploadFile(acceptedFiles[0]);
 	}, []);
+
 	const { getRootProps, getInputProps, isDragActive, acceptedFiles, isDragAccept, isDragReject } = useDropzone({
 		accept: 'image/gif, image/jpeg, image/png',
 		onDrop
@@ -29,6 +57,11 @@ const UploadImageDropzone = () => {
 					</ul>
 				</div>
 			)}
+
+			{/* Output upload status */}
+			{uploadProgress !== null && (<ProgressBar variant="success" animated now={uploadProgress} />)}
+
+			{message && (<Alert variant={message.error ? 'warning' : 'success'}>{message.text}</Alert>)}
 		</div>
 	)
 }
