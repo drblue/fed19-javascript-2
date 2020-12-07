@@ -1,7 +1,11 @@
-import { createContext, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { auth } from '../firebase'
 
 const AuthContext = createContext()
+
+const useAuth = () => {
+	return useContext(AuthContext)
+}
 
 const AuthContextProvider = (props) => {
 	const [currentUser, setCurrentUser] = useState(null)
@@ -23,4 +27,4 @@ const AuthContextProvider = (props) => {
 	)
 }
 
-export { AuthContext, AuthContextProvider as default }
+export { AuthContext, useAuth, AuthContextProvider as default }
