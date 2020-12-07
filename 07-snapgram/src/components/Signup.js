@@ -8,7 +8,9 @@ const Signup = () => {
 	const passwordRef = useRef()
 	const passwordConfirmRef = useRef()
 	const [error, setError] = useState(null)
+	const [loading, setLoading] = useState(false)
 	const { signup } = useAuth()
+	const navigate = useNavigate()
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
@@ -21,10 +23,13 @@ const Signup = () => {
 		setError(null);
 
 		try {
-			// try to log in user with the specified credentials
-			signup(emailRef.current.value, passwordRef.current.value)
+			// try to sign up the user with the specified credentials
+			setLoading(true)
+			await signup(emailRef.current.value, passwordRef.current.value)
+			navigate('/')
 		} catch (e) {
 			setError(e.message)
+			setLoading(false)
 		}
 	}
 
@@ -55,7 +60,7 @@ const Signup = () => {
 									<Form.Control type="password" ref={passwordConfirmRef} required />
 								</Form.Group>
 
-								<Button type="submit">Create Account</Button>
+								<Button disabled={loading} type="submit">Create Account</Button>
 
 							</Form>
 						</Card.Body>
