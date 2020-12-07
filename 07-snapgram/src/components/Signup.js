@@ -1,11 +1,32 @@
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import { Row, Col, Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
+import { AuthContext } from '../contexts/AuthContext'
 
 const Signup = () => {
 	const emailRef = useRef()
 	const passwordRef = useRef()
 	const passwordConfirmRef = useRef()
+	const [error, setError] = useState(null)
+	const { signup } = useContext(AuthContext)
+
+	const handleSubmit = async (e) => {
+		e.preventDefault()
+
+		// make sure user has entered the same password in both input fields
+		if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+			return setError("The passwords does not match")
+		}
+
+		setError(null);
+
+		try {
+			// try to log in user with the specified credentials
+			signup(emailRef.current.value, passwordRef.current.value)
+		} catch (e) {
+			setError(e.message)
+		}
+	}
 
 	return (
 		<>
@@ -15,7 +36,9 @@ const Signup = () => {
 						<Card.Body>
 							<Card.Title>Sign Up</Card.Title>
 
-							<Form>
+							{error && (<Alert variant="danger">{error}</Alert>)}
+
+							<Form onSubmit={handleSubmit}>
 
 								<Form.Group id="email">
 									<Form.Label>Email</Form.Label>
