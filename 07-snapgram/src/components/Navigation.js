@@ -29,7 +29,7 @@ const Navigation = () => {
 							<NavLink to="/albums" className="nav-link">Albums</NavLink>
 							{
 								currentUser ? (
-									<NavDropdown title={currentUser.email} id="basic-nav-dropdown">
+									<NavDropdown title={currentUser.displayName || currentUser.email} id="basic-nav-dropdown">
 										<NavLink to="/update-profile" className="dropdown-item">Update Profile</NavLink>
 										<NavDropdown.Divider />
 										<NavLink to="/logout" className="dropdown-item">Log Out</NavLink>
