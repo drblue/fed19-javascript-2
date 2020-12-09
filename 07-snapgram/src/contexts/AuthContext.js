@@ -12,6 +12,14 @@ const AuthContextProvider = (props) => {
 	const [currentUser, setCurrentUser] = useState(null)
 	const [loading, setLoading] = useState(true)
 
+	const login = (email, password) => {
+		return auth.signInWithEmailAndPassword(email, password)
+	}
+
+	const logout = () => {
+		return auth.signOut()
+	}
+
 	const signup = (email, password) => {
 		return auth.createUserWithEmailAndPassword(email, password)
 	}
@@ -29,6 +37,8 @@ const AuthContextProvider = (props) => {
 	const contextValues = {
 		currentUser,
 		loading,
+		login,
+		logout,
 		signup,
 	}
 

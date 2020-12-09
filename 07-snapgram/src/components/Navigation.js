@@ -1,12 +1,18 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React from 'react'
 import { Navbar, Nav, NavDropdown, Container } from 'react-bootstrap'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import logo from '../assets/images/logo.svg'
 
 const Navigation = () => {
-	const { currentUser } = useAuth()
+	const { currentUser, logout } = useAuth()
+	const navigate = useNavigate()
+
+	const handleLogout = async () => {
+		await logout()
+		navigate('/login')
+	}
 
 	return (
 		<div>
@@ -32,7 +38,7 @@ const Navigation = () => {
 									<NavDropdown title={currentUser.email} id="basic-nav-dropdown">
 										<NavLink to="/my-profile" className="dropdown-item">My Profile</NavLink>
 										<NavDropdown.Divider />
-										<NavLink to="/logout" className="dropdown-item">Log Out</NavLink>
+										<NavLink to="/logout" className="dropdown-item" onClick={handleLogout}>Log Out</NavLink>
 									</NavDropdown>
 								) : (
 									<NavLink to="/login" className="nav-link">Login</NavLink>
