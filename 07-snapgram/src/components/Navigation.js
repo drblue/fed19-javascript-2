@@ -30,7 +30,7 @@ const Navigation = () => {
 							{
 								currentUser ? (
 									<NavDropdown title={currentUser.email} id="basic-nav-dropdown">
-										<NavLink to="/my-profile" className="dropdown-item">My Profile</NavLink>
+										<NavLink to="/update-profile" className="dropdown-item">Update Profile</NavLink>
 										<NavDropdown.Divider />
 										<NavLink to="/logout" className="dropdown-item">Log Out</NavLink>
 									</NavDropdown>
