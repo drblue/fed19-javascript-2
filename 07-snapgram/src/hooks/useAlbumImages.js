@@ -6,7 +6,7 @@ const useAlbumImages = (albumId) => {
 
 	useEffect(() => {
 		const unsubscribe = db.collection('images')
-			.where('album', '==', albumId)
+			.where('album', '==', db.collection('albums').doc(albumId))
 			.orderBy("name")
 			.onSnapshot(snapshot => {
 				const imgs = [];
