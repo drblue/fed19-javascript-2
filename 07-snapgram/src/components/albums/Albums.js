@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Row, Col, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { BounceLoader } from 'react-spinners'
+import PhotoPlaceholder from '../../assets/images/photo-placeholder.png'
 import { useAuth } from '../../contexts/AuthContext'
 import { db } from '../../firebase'
 
@@ -12,7 +13,7 @@ const Albums = () => {
 
 	useEffect(() => {
 		// register a snapshot-listener on firestore for all available albums
-		const unsubscribe = db.collection('albums').onSnapshot(snapshot => {
+		const unsubscribe = db.collection('albums').orderBy('title').onSnapshot(snapshot => {
 			setLoading(true)
 			const snapshotAlbums = []
 
@@ -41,8 +42,11 @@ const Albums = () => {
 					{albums.map(album => (
 						<Col sm={6} md={4} lg={3} key={album.id}>
 							<Card className="mb-3">
+							<Link to={`/albums/${album.id}`}>
+								<Card.Img variant="top" src={PhotoPlaceholder} title={album.title} />
+							</Link>
 								<Card.Body>
-									<Card.Title>
+									<Card.Title className="mb-0">
 										<Link to={`/albums/${album.id}`}>{album.title}</Link>
 									</Card.Title>
 								</Card.Body>
