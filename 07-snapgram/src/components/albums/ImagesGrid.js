@@ -1,8 +1,21 @@
-import React from 'react'
-import { Row, Col, Card } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Row, Col, Card, Button } from 'react-bootstrap'
 import { SRLWrapper } from 'simple-react-lightbox'
+import { useAuth } from '../../contexts/AuthContext'
+import useDeleteImage from '../../hooks/useDeleteImage'
 
 const ImagesGrid = ({ images }) => {
+	const [deleteImage, setDeleteImage] = useState(null);
+	const { currentUser } = useAuth()
+	useDeleteImage(deleteImage);
+
+	const handleDeleteImage = (image) => {
+		// eslint-disable-next-line no-restricted-globals
+		if (confirm(`Are you really sure you want to delete the image\n"${image.name}"?`)) {
+			setDeleteImage(image);
+		}
+	}
+
 	return (
 		<SRLWrapper>
 			<Row className="my-3">
@@ -16,7 +29,15 @@ const ImagesGrid = ({ images }) => {
 								<Card.Text className="text-muted small">
 									{image.name} ({Math.round(image.size/1024)} kb)
 								</Card.Text>
-								{/* <Button variant="danger" size="sm" onClick={handleDeleteImage}>Delete</Button> */}
+								{
+									currentUser.uid === image.owner && (
+										<Button variant="danger" size="sm" onClick={() => {
+											handleDeleteImage(image)
+										}}>
+											Delete
+										</Button>
+									)
+								}
 							</Card.Body>
 						</Card>
 					</Col>
