@@ -1,35 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Row, Col, Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { BounceLoader } from 'react-spinners'
 import PhotoPlaceholder from '../../assets/images/photo-placeholder.png'
 import { useAuth } from '../../contexts/AuthContext'
-import { db } from '../../firebase'
+import useAlbums from '../../hooks/useAlbums'
 
 const Albums = () => {
 	const { currentUser } = useAuth()
-	const [albums, setAlbums] = useState([])
-	const [loading, setLoading] = useState(true)
-
-	useEffect(() => {
-		// register a snapshot-listener on firestore for all available albums
-		const unsubscribe = db.collection('albums').orderBy('title').onSnapshot(snapshot => {
-			setLoading(true)
-			const snapshotAlbums = []
-
-			snapshot.forEach(doc => {
-				snapshotAlbums.push({
-					id: doc.id,
-					...doc.data(),
-				})
-			})
-
-			setAlbums(snapshotAlbums)
-			setLoading(false)
-		})
-
-		return unsubscribe
-	}, [])
+	const { albums, loading } = useAlbums()
 
 	return (
 		<>
