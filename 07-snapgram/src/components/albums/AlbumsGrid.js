@@ -9,9 +9,9 @@ const AlbumsGrid = ({ albums }) => {
 			{albums.map(album => (
 				<Col sm={6} md={4} lg={3} key={album.id}>
 					<Card className="mb-3">
-					<Link to={`/albums/${album.id}`}>
-						<Card.Img variant="top" src={PhotoPlaceholder} title={album.title} />
-					</Link>
+						<Link to={`/albums/${album.id}`}>
+							<Card.Img variant="top" src={PhotoPlaceholder} title={album.title} />
+						</Link>
 						<Card.Body>
 							<Card.Title className="mb-0">
 								<Link to={`/albums/${album.id}`}>{album.title}</Link>
