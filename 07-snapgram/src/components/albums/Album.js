@@ -1,6 +1,6 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import AlbumImages from './AlbumImages'
+import ImagesGrid from './ImagesGrid'
 import useAlbumImages from '../../hooks/useAlbumImages'
 
 const Album = () => {
@@ -12,7 +12,7 @@ const Album = () => {
 		<div>
 			This will show all images in album with id <code>{albumId}</code>.
 
-			<AlbumImages images={images} />
+			<ImagesGrid images={images} />
 		</div>
 	)
 }
