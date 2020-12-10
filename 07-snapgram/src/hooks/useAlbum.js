@@ -1,14 +1,27 @@
 import { useEffect, useState } from 'react';
 import { db } from '../firebase';
 
-const useAlbumImages = (albumId) => {
+const useAlbum = (albumId) => {
+	const [album, setAlbum] = useState();
 	const [images, setImages] = useState([]);
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		db.collection('albums').doc(albumId).get().then(doc => {
+			setAlbum({
+				id: doc.id,
+				...doc.data(),
+			})
+		})
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [albumId])
 
 	useEffect(() => {
 		const unsubscribe = db.collection('images')
 			.where('album', '==', db.collection('albums').doc(albumId))
 			.orderBy("name")
 			.onSnapshot(snapshot => {
+				setLoading(true);
 				const imgs = [];
 
 				snapshot.forEach(doc => {
@@ -19,12 +32,14 @@ const useAlbumImages = (albumId) => {
 				});
 
 				setImages(imgs);
+				setLoading(false);
 			});
 
 		return unsubscribe;
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [albumId]);
 
-	return { images };
+	return { album, images, loading };
 }
 
-export default useAlbumImages;
+export default useAlbum;

@@ -1,23 +1,26 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
+import { BounceLoader } from 'react-spinners'
 import ImagesGrid from './ImagesGrid'
-import useAlbumImages from '../../hooks/useAlbumImages'
+import useAlbum from '../../hooks/useAlbum'
 import UploadAlbumImage from './UploadAlbumImage'
 
 const Album = () => {
-	// query firestore for images with this albumId set as their album
 	const { albumId } = useParams()
-	const { images } = useAlbumImages(albumId)
+	const { album, images, loading } = useAlbum(albumId)
 
 	return (
 		<>
-			<h2 className="mb-3">Album {albumId}</h2>
+			<h2 className="mb-3">Album {album && album.title}</h2>
 
 			<UploadAlbumImage albumId={albumId} />
 
 			<hr />
 
-			<ImagesGrid images={images} />
+			{loading
+				? (<BounceLoader color={"#888"} size={20} />)
+				: (<ImagesGrid images={images} />)
+			}
 		</>
 	)
 }

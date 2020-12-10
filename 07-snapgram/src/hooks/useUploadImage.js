@@ -76,7 +76,8 @@ const useUploadImage = (image, albumId = null) => {
 				msg: `Image could not be uploaded due to an error (${error.code})`
 			});
 		});
-	}, [image, albumId, currentUser]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [image, currentUser]);
 
 	return { uploadProgress, uploadedImage, error, isSuccess };
 }
