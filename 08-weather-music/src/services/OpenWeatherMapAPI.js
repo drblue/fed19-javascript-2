@@ -31,5 +31,19 @@ export const getCurrentWeather = async (location) => {
 
 	const response = await get(`/weather?${queryString}`)
 
-	console.log("response", response)
+	const currentWeather = {
+		name: response.name,
+		latitude: response.coord.lat,
+		longitude: response.coord.lon,
+		temperature: response.main.temp,
+		feels_like: response.main.feels_like,
+		conditions: response.weather.map(condition => {
+			return {
+				text: condition.description,
+				icon: `http://openweathermap.org/img/wn/${condition.icon}.png`,
+			}
+		})
+	}
+
+	return currentWeather
 }
