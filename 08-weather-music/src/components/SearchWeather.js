@@ -2,27 +2,18 @@ import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
+import MoonLoader from 'react-spinners/MoonLoader'
+import useCurrentLocation from '../hooks/useCurrentLocation'
 
 const SearchWeather = ({ onSearchWeather }) => {
-	const [userLocation, setUserLocation] = useState(false)
 	const [city, setCity] = useState("")
+	const { location, loading } = useCurrentLocation()
 
 	useEffect(() => {
-		const positionOptions = {
-			timeout: 10 * 1000, // 10 seconds
-			maximumAge: 2 * 60 * 60 * 1000, // 2 hours
+		if (location) {
+			onSearchWeather(location)
 		}
-
-		const handleSuccess = position => {
-			console.log('Gots me a position:', position)
-		}
-
-		const handleError = error => {
-			console.error('Ooops, could not get a position:', error);
-		}
-
-		navigator.geolocation.getCurrentPosition(handleSuccess, handleError, positionOptions)
-	}, [])
+	}, [onSearchWeather, location])
 
 	const handleChange = (e) => {
 		setCity(e.target.value)
@@ -31,40 +22,50 @@ const SearchWeather = ({ onSearchWeather }) => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (!userLocation && city.length < 3) {
+		if (city.length < 3) {
 			return;
 		}
 
 		// let parent know we want to search for weather in `city`
-		console.log(`Want to search for weather in city '${city}'...`)
-
 		if (city) {
 			onSearchWeather({ city })
 		}
 	}
 
-	return (
-		<Form onSubmit={handleSubmit}>
-			<InputGroup>
-				<Form.Control
-					type="text"
-					onChange={handleChange}
-					placeholder="Enter city"
-					aria-label="Enter city to search for current weather"
-				/>
+	if (loading) {
+		return (
+			<div className="d-flex">
+				<MoonLoader size={60} color={'#aaa'} />
+			</div>
+		)
+	}
 
-				<InputGroup.Append>
-					<Button variant="primary" type="submit">
-						Search
-					</Button>
-				</InputGroup.Append>
-			</InputGroup>
+	return location ? (
+			<div className="text-center">
+				Found you! Lat: {location.latitude}, lng: {location.longitude}
+			</div>
+		) : (
+			<Form onSubmit={handleSubmit}>
+				<InputGroup>
+					<Form.Control
+						type="text"
+						onChange={handleChange}
+						placeholder="Enter city"
+						aria-label="Enter city to search for current weather"
+					/>
 
-			{!userLocation && city.length > 0 && city.length < 3 && (
-				<Form.Text muted>Please enter at least three characters</Form.Text>
-			)}
-		</Form>
-	)
+					<InputGroup.Append>
+						<Button variant="primary" type="submit">
+							Search
+						</Button>
+					</InputGroup.Append>
+				</InputGroup>
+
+				{city.length > 0 && city.length < 3 && (
+					<Form.Text muted>Please enter at least three characters</Form.Text>
+				)}
+			</Form>
+		)
 }
 
 export default SearchWeather
