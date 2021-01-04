@@ -1,0 +1,10 @@
+/**
+ * Main App Styles
+ */
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+	@extend .bg-dark;
+	@extend .text-white;
+}
