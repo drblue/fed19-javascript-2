@@ -38,16 +38,18 @@ function App() {
 			<h1>Weather Music ⛅️🎶</h1>
 
 			<div className="my-5 text-center">
-				<SearchWeather onSearchWeather={handleSearchWeather} />
+				<div className="search-weather mb-5">
+					<SearchWeather onSearchWeather={handleSearchWeather} />
+				</div>
 
 				{error && (
-					<Alert variant="warning">
+					<Alert variant="warning" className="mb-5">
 						{error}
 					</Alert>
 				)}
 
 				{currentWeather && (
-					<div className="current-weather">
+					<div className="current-weather mb-5">
 						<h2>Current Weather in {currentWeather.name}</h2>
 
 						<div className="display-4">Temp: {currentWeather.temperature}</div>

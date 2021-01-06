@@ -11,7 +11,7 @@ const useCurrentLocation = () => {
 			maximumAge: 2 * 60 * 60 * 1000, // 2 hours
 		}
 
-		// Get gots ourselves a current user position
+		// We gots ourselves a current user position
 		const handleSuccess = position => {
 			const { latitude, longitude } = position.coords
 
