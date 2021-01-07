@@ -29,9 +29,7 @@ const SearchWeather = ({ onSearchWeather }) => {
 		}
 
 		// let parent know we want to search for weather in `city`
-		if (city) {
-			onSearchWeather({ city })
-		}
+		onSearchWeather({ city })
 	}
 
 	if (loading) {

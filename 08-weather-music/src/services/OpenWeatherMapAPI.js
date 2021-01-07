@@ -11,6 +11,7 @@ const apiKeyQueryString = `&appid=${process.env.REACT_APP_OPENWEATHERMAP_API_KEY
 /**
  * HTTP GET
  *
+ * @todo Split parameter into endpoint & object of query-string key/value pairs. Also split `apiKeyQueryString` to accomodate this.
  * @param {String} endpoint API endpoint
  */
 const get = async (endpoint) => {
