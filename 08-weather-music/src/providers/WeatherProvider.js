@@ -2,11 +2,10 @@
  * Provide Weather services
  */
 
-/*
 import {
 	getCurrentWeatherData as OWMAPI_getCurrentWeatherData,
 } from '../services/OpenWeatherMapAPI'
-*/
+
 import {
 	getCurrent as WAAPI_getCurrent
 } from '../services/WeatherApiAPI'
