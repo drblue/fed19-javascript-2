@@ -54,9 +54,9 @@ function App() {
 
 						<div className="display-4">Temp: {currentWeather.temperature}</div>
 
-						<ul className="list-inline">
+						<ul className="current-weather-conditions list-inline">
 							{currentWeather.conditions.map((condition, index) => (
-								<li className="list-inline-item" key={index}>
+								<li className="current-weather-condition list-inline-item" key={index}>
 									<img src={condition.icon} alt={condition.text} title={condition.text} />
 								</li>
 							))}

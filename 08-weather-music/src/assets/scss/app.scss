@@ -8,3 +8,17 @@ body {
 	@extend .bg-dark;
 	@extend .text-white;
 }
+
+/*
+ * Current Weather Conditions
+ */
+.current-weather {
+	.current-weather-conditions {
+		margin-top: 1.5rem;
+
+		.current-weather-condition {
+			background-color: #aaa;
+			border-radius: 200%;
+		}
+	}
+}
