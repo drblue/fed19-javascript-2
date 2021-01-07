@@ -53,7 +53,7 @@ function App() {
 					<div className="current-weather mb-5">
 						<h2>Current Weather in {currentWeather.name}</h2>
 
-						<div className="display-4">Temp: {currentWeather.temperature}</div>
+						<div className="display-4">Temp: {currentWeather.temperature}&deg;C</div>
 
 						<ul className="current-weather-conditions list-inline">
 							{currentWeather.conditions.map((condition, index) => (
