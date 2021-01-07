@@ -3,7 +3,8 @@ import Alert from 'react-bootstrap/Alert'
 import Container from 'react-bootstrap/Container'
 import './assets/scss/app.scss'
 import SearchWeather from './components/SearchWeather'
-import { getCurrentWeather } from './services/OpenWeatherMapAPI'
+// import { getCurrentWeather } from './services/OpenWeatherMapAPI'
+import { getWeatherForLocation } from './providers/WeatherProvider'
 
 function App() {
 	const [currentWeather, setCurrentWeather] = useState(null)
@@ -19,7 +20,7 @@ function App() {
 
 		try {
 			// fetch weather for location
-			const weatherData = await getCurrentWeather(location)
+			const weatherData = await getWeatherForLocation(location)
 			console.log("got data back from OWMAPI-service:", weatherData)
 
 			// update currentWeather state with weather data

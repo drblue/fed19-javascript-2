@@ -24,7 +24,7 @@ const get = async (endpoint) => {
  *
  * @param {Object} location Location to get current weather data for
  */
-export const getCurrentWeather = async (location) => {
+export const getCurrentWeatherData = async (location) => {
 	let queryString = location.city
 		? `q=${location.city}`
 		: `lat=${location.latitude}&lon=${location.longitude}`
