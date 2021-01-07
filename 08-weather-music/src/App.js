@@ -21,7 +21,7 @@ function App() {
 		try {
 			// fetch weather for location
 			const weatherData = await getWeatherForLocation(location)
-			console.log("got data back from OWMAPI-service:", weatherData)
+			console.log("got data back from the Weather provider:", weatherData)
 
 			// update currentWeather state with weather data
 			setCurrentWeather(weatherData)
