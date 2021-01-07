@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
@@ -7,12 +7,10 @@ import useCurrentLocation from '../hooks/useCurrentLocation'
 
 const SearchWeather = ({ onSearchWeather }) => {
 	const [city, setCity] = useState("")
-	const userLocation = useRef()
 	const { location, loading } = useCurrentLocation()
 
 	useEffect(() => {
-		if (location && !userLocation.current) {
-			userLocation.current = location
+		if (location) {
 			onSearchWeather(location)
 		}
 	}, [onSearchWeather, location])
