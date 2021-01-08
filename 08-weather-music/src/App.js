@@ -4,7 +4,7 @@ import Container from 'react-bootstrap/Container'
 import './assets/scss/app.scss'
 import SearchWeather from './components/SearchWeather'
 import { getWeatherForLocation } from './providers/WeatherProvider'
-import { searchPlaylist } from './services/DeezerAPI'
+import { searchForPlaylistsContaining } from './providers/MusicProvider'
 
 function App() {
 	const [currentWeather, setCurrentWeather] = useState(null)
@@ -12,7 +12,7 @@ function App() {
 
 	useEffect(() => {
 		(async () => {
-			const playlistsSearchResult = await searchPlaylist('rain', 0, 3)
+			const playlistsSearchResult = await searchForPlaylistsContaining('rain', 2, 3)
 			console.log("Got playlists search result:", playlistsSearchResult)
 		})()
 	}, [])
