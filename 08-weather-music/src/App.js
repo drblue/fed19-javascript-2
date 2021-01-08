@@ -3,12 +3,14 @@ import Alert from 'react-bootstrap/Alert'
 import Container from 'react-bootstrap/Container'
 import './assets/scss/app.scss'
 import SearchWeather from './components/SearchWeather'
-// import { getCurrentWeather } from './services/OpenWeatherMapAPI'
 import { getWeatherForLocation } from './providers/WeatherProvider'
+import { searchPlaylist } from './services/DeezerAPI'
 
 function App() {
 	const [currentWeather, setCurrentWeather] = useState(null)
 	const [error, setError] = useState(null)
+
+	searchPlaylist('rain', 0, 3)
 
 	const handleSearchWeather = useCallback(async (location) => {
 		console.log('User wants to search for weather at location:', location);
@@ -40,7 +42,7 @@ function App() {
 
 			<div className="my-5 text-center">
 				<div className="search-weather mb-5">
-					<SearchWeather onSearchWeather={handleSearchWeather} />
+					{/* <SearchWeather onSearchWeather={handleSearchWeather} /> */}
 				</div>
 
 				{error && (

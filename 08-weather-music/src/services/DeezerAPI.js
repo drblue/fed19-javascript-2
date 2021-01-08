@@ -5,8 +5,22 @@
 import axios from 'axios'
 import queryString from 'query-string'
 
-const requestConfig = {}
+const requestConfig = {
+	headers: {
+		'X-Requested-With': 'axios',
+	},
+}
+const corsProxyUrl = 'https://cors-anywhere.herokuapp.com'
 const baseApiUrl = 'https://api.deezer.com'
+
+/**
+ * Get URL for API endpoint
+ *
+ * @param {String} endpoint API endpoint
+ */
+const getApiUrlForEndpoint = (endpoint) => {
+	return corsProxyUrl + '/' + baseApiUrl + '/' + endpoint
+}
 
 /**
  * HTTP GET
@@ -18,7 +32,10 @@ const get = async (endpoint, queryParameters = {}) => {
 	const queryStr = queryString.stringify(queryParameters)
 
 	// send request
-	const res = await axios.get(`${baseApiUrl}${endpoint}?${queryStr}`, requestConfig);
+	const res = await axios.get(
+		getApiUrlForEndpoint(endpoint) + '?' + queryStr,
+		requestConfig
+	);
 
 	// return response
 	return res.data;
@@ -31,6 +48,12 @@ const get = async (endpoint, queryParameters = {}) => {
  * @param {Number} index Result to start at
  * @param {Number} limit Results to retrieve
  */
-const searchPlaylist = (query, index = 0, limit = 10) => {
+export const searchPlaylist = async (query, index = 0, limit = 10) => {
+	const response = await get('search/playlist', {
+		q: query,
+		index,
+		limit,
+	})
 
+	console.log("Got a response from `/search/playlist`:", response)
 }
