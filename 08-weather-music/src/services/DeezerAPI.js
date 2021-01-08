@@ -55,5 +55,15 @@ export const searchPlaylist = async (query, index = 0, limit = 10) => {
 		limit,
 	})
 
-	console.log("Got a response from `/search/playlist`:", response)
+	const playlists = response.data.map(playlist => {
+		return {
+			title: playlist.title,
+			cover: playlist.picture_big,
+			nb_tracks: playlist.nb_tracks,
+			link: playlist.link,
+			username: playlist.user.name,
+		}
+	})
+
+	return playlists;
 }

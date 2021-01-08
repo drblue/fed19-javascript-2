@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import Alert from 'react-bootstrap/Alert'
 import Container from 'react-bootstrap/Container'
 import './assets/scss/app.scss'
@@ -10,7 +10,12 @@ function App() {
 	const [currentWeather, setCurrentWeather] = useState(null)
 	const [error, setError] = useState(null)
 
-	searchPlaylist('rain', 0, 3)
+	useEffect(() => {
+		(async () => {
+			const playlistsSearchResult = await searchPlaylist('rain', 0, 3)
+			console.log("Got playlists search result:", playlistsSearchResult)
+		})()
+	}, [])
 
 	const handleSearchWeather = useCallback(async (location) => {
 		console.log('User wants to search for weather at location:', location);
