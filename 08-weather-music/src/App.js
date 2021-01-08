@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react'
-import { Alert, Card, Col, Container, Row } from 'react-bootstrap'
+import { Alert, Container, Row } from 'react-bootstrap'
 import ClipLoader from 'react-spinners/ClipLoader'
 import './assets/scss/app.scss'
 import PlaylistCard from './components/PlaylistCard'
