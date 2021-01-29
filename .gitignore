@@ -1,4 +1,5 @@
 *-nogit/
 build/
+inlamningsuppgift/
 node_modules/
 .env
